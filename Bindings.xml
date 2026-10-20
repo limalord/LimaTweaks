@@ -1,19 +1,19 @@
 <Bindings>
 
-	<Binding name="LIMAUI_OPEN" category = "Lima UI">
-		SlashCmdList["LIMAUI"]()
+	<Binding name="INTERFACE_TWEAKS_OPEN" category = "InterfaceTweaks">
+		SlashCmdList["INTERFACE_TWEAKS"]()
 	</Binding>
 
-	<Binding name="LIMAUI_RELOAD" category = "Lima UI">
+	<Binding name="INTERFACE_TWEAKS_RELOAD" category = "InterfaceTweaks">
     ReloadUI()
 	</Binding>
 
-  <Binding name="LIMAUI_OPEN_OUTFITS" category="Lima UI">
-    SlashCmdList["LIMAUI_OUTFITS"]()
+  <Binding name="INTERFACE_TWEAKS_OPEN_OUTFITS" category="InterfaceTweaks">
+    SlashCmdList["INTERFACE_TWEAKS_OUTFITS"]()
   </Binding>
 
-	<Binding name="ITEM Hearthstone" category = "Lima UI"/>
+	<Binding name="ITEM Hearthstone" category = "InterfaceTweaks"/>
 
-	<Binding name="MACRO LIMAUI_FOCUS" category = "Lima UI"/>
+	<Binding name="MACRO INTERFACE_TWEAKS_FOCUS" category = "InterfaceTweaks"/>
 
 </Bindings>

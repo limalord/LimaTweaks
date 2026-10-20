@@ -1,0 +1,11 @@
+## Interface: 16001
+## Title: |cFF69CCF0InterfaceTweaks|r
+## Version: 1
+## Notes: Extends original Options, minimal tweaks, and quality of life changes.
+## Author: limalord
+## IconTexture: Interface\ICONS\Ability_warrior_charge
+## SavedVariables: InterfaceTweaksDB
+
+slashcmd.lua
+config.lua
+core.lua

@@ -1,4 +1,29 @@
-#+title: LimaUI
+#+title: InterfaceTweaks
 
-* Docs
+* About this addon
 
+Adds options panels for settings and variables that the game doesn't make available anymore, or never did in the first place. The goal behind the addon is to extend the original Options panel, provide minimal interface tweaks, and quality of life changes - all while preserving the original game look and feel as much as possible.
+
+** Minimalism
+
+Hide clutter elements such as macro names, keybinding text, bag bars, hit indicators.
+
+** Interface Scaling
+
+Scale interface frames that can't be scaled via Edit Mode such as World Map, Talents Pane, and others.
+
+** Unit Frames
+
+Add class colors to Player/Target/Focus health bar and or name text.
+
+** Keybindings
+
+The game provides keybindings for "focus target" and "target focus", but doesn't provide a bind for "focus mouseover or target". You can now bind that. Other examples include opening your Outfits window from anywhere in the world, opening this addon options panel, or reloading your interface.
+
+** Automation
+
+Toggles for "Auto Repair" and "Fast Loot".
+
+** Variables
+
+Sliders and checkboxes for CVars that the game's Options doesn't expose.

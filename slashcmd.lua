@@ -50,9 +50,9 @@ function addon.SlashCmd.Outfits(msg, editBox)
 end
 
 function addon.SlashCmd.Initialize()
-    SLASH_LIMAUI1 = "/limaui"
-    SLASH_LIMAUI2 = "/lui"
-    SLASH_LIMAUI_OUTFITS1 = "/luioutfits"
-    SlashCmdList["LIMAUI"] = addon.SlashCmd.Open
-    SlashCmdList["LIMAUI_OUTFITS"] = addon.SlashCmd.Outfits
+    SLASH_INTERFACE_TWEAKS1 = "/interfacetweaks"
+    SLASH_INTERFACE_TWEAKS2 = "/it"
+    SLASH_INTERFACE_TWEAKS_OUTFITS1 = "/itoutfits"
+    SlashCmdList["INTERFACE_TWEAKS"] = addon.SlashCmd.Open
+    SlashCmdList["INTERFACE_TWEAKS_OUTFITS"] = addon.SlashCmd.Outfits
 end

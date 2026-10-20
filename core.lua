@@ -3,8 +3,8 @@ local addonName, addon = ...
 
 local function EventHandler(self, event, arg1, arg2, arg3, ...)
     if event == "PLAYER_LOGIN" then
-        if not LimaUIDB then LimaUIDB = {} end
-        addon.database = LimaUIDB
+        if not InterfaceTweaksDB then InterfaceTweaksDB = {} end
+        addon.database = InterfaceTweaksDB
         addon.session = {}
         addon.session.PlayerColor = RAID_CLASS_COLORS[select(2, UnitClass("player"))]
         addon.InitializeSettings()
