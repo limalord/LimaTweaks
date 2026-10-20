@@ -342,18 +342,18 @@ local function InitializeSettings()
         local maxValue = 1.5
         local step = 0.01
         local tooltip = "Adjust the Looking For Group pane size to a more comfortable level."
-    
+
         local function GetValue()
             return addon.database.LFGParentFrameScale or defaultValue
         end
-    
+
         local function SetValue(value)
             LFGParentFrame:SetScale(value)
             addon.database.LFGParentFrameScale = value
         end
-    
+
         local setting = Settings.RegisterProxySetting(mainCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
-    
+
         local options = Settings.CreateSliderOptions(minValue, maxValue, step)
         options:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right, FormatPercentageRounded)
         Settings.CreateSlider(uiScaleCategory, setting, options, tooltip)
@@ -584,7 +584,7 @@ local function InitializeSettings()
             if not EmptyNameBarColorFrame then return end
             EmptyNameBarColorFrame:UnregisterAllEvents()
         end
-    
+
         local function GetValue()
             return addon.database.TargetFocusReputationBarClassColor or defaultValue
         end
@@ -662,7 +662,7 @@ local function InitializeSettings()
             if not EmptyHealthBarColorFrame then return end
             EmptyHealthBarColorFrame:UnregisterAllEvents()
         end
-    
+
         local function GetValue()
             return addon.database.TargetFocusHealthBarClassColor or defaultValue
         end
@@ -749,6 +749,49 @@ local function InitializeSettings()
 					      RepairFrame:UnregisterEvent("MERCHANT_SHOW")
             end
             addon.database.AutomationRepairGear = value
+        end
+
+        local setting = Settings.RegisterProxySetting(automationCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
+        Settings.CreateCheckbox(automationCategory, setting, tooltip)
+
+        SetValue(GetValue())
+    end
+
+    do
+        local name = "Fast Loot"
+        local variable = "FastLoot"
+        local defaultValue = false
+        local tooltip = "Increases looting speed by reducing loot window delay."
+
+        local function GetValue()
+            return addon.database.FastLoot or defaultValue
+        end
+
+        local tDelay = 0
+        local lootDelay = 0.3 -- setting delay lower than this doesn't improve results
+
+			  local function FastLoot()
+				    if GetTime() - tDelay >= lootDelay then
+					      tDelay = GetTime()
+					      if GetCVarBool("autoLootDefault") ~= IsModifiedClick("AUTOLOOTTOGGLE") then
+						        for i = GetNumLootItems(), 1, -1 do
+							          LootSlot(i)
+						        end
+						        tDelay = GetTime()
+					      end
+				    end
+			  end
+
+			  local FastLootFrame = CreateFrame("Frame")
+			  FastLootFrame:SetScript("OnEvent", FastLoot)
+
+        local function SetValue(value)
+            if value then
+			          FastLootFrame:RegisterEvent("LOOT_READY")
+				    else
+			          FastLootFrame:UnregisterEvent("LOOT_READY")
+            end
+            addon.database.FastLoot = value
         end
 
         local setting = Settings.RegisterProxySetting(automationCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
