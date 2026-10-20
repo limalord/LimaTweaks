@@ -67,8 +67,8 @@ local function InitializeSettings()
         local name = "Game Menu scale"
         local variable = "GameMenuScale"
         local defaultValue = 1
-        local minValue = 0.65
-        local maxValue = 1.15
+        local minValue = 0.5
+        local maxValue = 1.5
         local step = 0.01
         local tooltip = "Adjust the Game Menu size to a more comfortable level."
 
@@ -94,8 +94,8 @@ local function InitializeSettings()
         local name = "Character Frame tabs scale"
         local variable = "CharacterFrameTabScale"
         local defaultValue = 1
-        local minValue = 0.65
-        local maxValue = 1.15
+        local minValue = 0.5
+        local maxValue = 1.5
         local step = 0.01
         local tooltip = "Adjust the Character Frame tabs size to a more comfortable level."
 
@@ -121,8 +121,8 @@ local function InitializeSettings()
         local name = "Status Track Bar scale"
         local variable = "StatusTrackBarScale"
         local defaultValue = 1
-        local minValue = 0.65
-        local maxValue = 1.15
+        local minValue = 0.5
+        local maxValue = 1.5
         local step = 0.01
         local tooltip = "Adjust the Status Track Bar size to a more comfortable level."
 
@@ -148,8 +148,8 @@ local function InitializeSettings()
         local name = "Secondary Status Track Bar scale"
         local variable = "SecondaryStatusTrackBarScale"
         local defaultValue = 1
-        local minValue = 0.65
-        local maxValue = 1.15
+        local minValue = 0.5
+        local maxValue = 1.5
         local step = 0.01
         local tooltip = "Adjust the Secondary Status Track Bar size to a more comfortable level."
 
