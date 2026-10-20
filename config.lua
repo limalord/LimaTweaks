@@ -626,6 +626,47 @@ local function InitializeSettings()
         local initializer = CreateKeybindingEntryInitializer(bindingIndex, true)
         keyBindingsLayout:AddInitializer(initializer)
     end
+
+    -- Automation category
+    local automationCategory, automationLayout = Settings.RegisterVerticalLayoutSubcategory(mainCategory, "Automation")
+    Settings.RegisterAddOnCategory(automationCategory)
+
+    do
+        local name = "Auto Repair"
+        local variable = "AutomationRepairGear"
+        local defaultValue = false
+        local tooltip = "Automatically repairs gear when a merchant window is open."
+			  local function RepairFunc()
+				    if CanMerchantRepair() then
+					      local RepairCost, CanRepair = GetRepairAllCost()
+					      if CanRepair then
+                    RepairAllItems()
+							      print("Repaired for "..C_CurrencyInfo.GetCoinText(RepairCost)..".")
+					      end
+				    end
+			  end
+
+        local function GetValue()
+            return addon.database.AutomationRepairGear or defaultValue
+        end
+
+        local RepairFrame = CreateFrame("FRAME")
+        RepairFrame:SetScript("OnEvent", RepairFunc)
+
+        local function SetValue(value)
+            if value then
+					      RepairFrame:RegisterEvent("MERCHANT_SHOW")
+				    else
+					      RepairFrame:UnregisterEvent("MERCHANT_SHOW")
+            end
+            addon.database.AutomationRepairGear = value
+        end
+
+        local setting = Settings.RegisterProxySetting(automationCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
+        Settings.CreateCheckbox(mainCategory, setting, tooltip)
+
+        SetValue(GetValue())
+    end
 end
 
 local function LFGSettings()
