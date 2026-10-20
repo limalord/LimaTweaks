@@ -836,22 +836,53 @@ local function InitializeSettings()
 
     do
         local variablesList = {
-            ["groundEffectDensity"] = {
+            [1] = { name = "Image Quality", separator = true },
+            [2] = {
+                cvar = "ResampleAlwaysSharpen",
+                name = "Resample Always Sharpen",
+                varType = Settings.VarType.Number,
+                format = Formatter,
+                min = 0, max = 1, step = 1,
+                tooltip = "Forces always-on image sharpening. Also check Resample Quality and Resample Sharpness in the Graphics options."
+            },
+            [3] = { name = "Ground Effects", separator = true },
+            [4] = {
+                cvar = "groundEffectDist",
+                name = "Ground Effect Distance",
+                varType = Settings.VarType.Number,
+                format = Formatter,
+                min = 40, max = 500, step = 1,
+                tooltip = "Ground foliage max render distance."
+            },
+            [5] = {
+                cvar = "groundEffectFade",
+                name = "Ground Effect Fade",
+                varType = Settings.VarType.Number,
+                format = Formatter,
+                min = 0, max = 500, step = 1,
+                tooltip = "Controls how much distance the ground foliage fades over."
+            },
+            [6] = {
+                cvar = "groundEffectDensity",
                 name = "Ground Effect Density",
                 varType = Settings.VarType.Number,
                 format = Formatter,
                 min = 16, max = 256, step = 1,
-                tooltip = "Increases grass and ground foliage density"
-            }
+                tooltip = "Sets grass and ground foliage density level."
+            },
         }
-        for cvar, info in pairs(variablesList) do
-            getValue, setValue, getDefaultValue = Settings.CreateCVarAccessorClosures(cvar, info.varType)
-            defaultValue = getDefaultValue()
-            tooltip = info.tooltip.." (Default: "..defaultValue..")."
-		        local setting = Settings.RegisterProxySetting(variablesCategory, info.name, type(defaultValue), info.name, defaultValue, getValue, setValue);
-            local options = Settings.CreateSliderOptions(info.min, info.max, info.step)
-            options:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right, info.format)
-            Settings.CreateSlider(variablesCategory, setting, options, tooltip)
+        for i, info in ipairs(variablesList) do
+            if info.separator then
+                variablesLayout:AddInitializer(CreateSettingsListSectionHeaderInitializer(info.name))
+            else
+                getValue, setValue, getDefaultValue = Settings.CreateCVarAccessorClosures(info.cvar, info.varType)
+                defaultValue = getDefaultValue()
+                tooltip = info.tooltip.." (Default: "..defaultValue..")"
+		            local setting = Settings.RegisterProxySetting(variablesCategory, info.name, type(defaultValue), info.name, defaultValue, getValue, setValue);
+                local options = Settings.CreateSliderOptions(info.min, info.max, info.step)
+                options:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right, info.format)
+                Settings.CreateSlider(variablesCategory, setting, options, tooltip)
+            end
         end
     end
 end
