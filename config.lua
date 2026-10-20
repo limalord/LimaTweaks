@@ -834,7 +834,26 @@ local function InitializeSettings()
     local variablesCategory, variablesLayout = Settings.RegisterVerticalLayoutSubcategory(mainCategory, "Variables")
     Settings.RegisterAddOnCategory(variablesCategory)
 
-
+    do
+        local variablesList = {
+            ["groundEffectDensity"] = {
+                name = "Ground Effect Density",
+                varType = Settings.VarType.Number,
+                format = Formatter,
+                min = 16, max = 256, step = 1,
+                tooltip = "Increases grass and ground foliage density"
+            }
+        }
+        for cvar, info in pairs(variablesList) do
+            getValue, setValue, getDefaultValue = Settings.CreateCVarAccessorClosures(cvar, info.varType)
+            defaultValue = getDefaultValue()
+            tooltip = info.tooltip.." (Default: "..defaultValue..")."
+		        local setting = Settings.RegisterProxySetting(variablesCategory, info.name, type(defaultValue), info.name, defaultValue, getValue, setValue);
+            local options = Settings.CreateSliderOptions(info.min, info.max, info.step)
+            options:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right, info.format)
+            Settings.CreateSlider(variablesCategory, setting, options, tooltip)
+        end
+    end
 end
 
 local function LFGSettings()
