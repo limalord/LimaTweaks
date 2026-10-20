@@ -173,10 +173,10 @@ local function InitializeSettings()
 
 
     -- Unit Frames category
-    local unitFramesCategory, layout = Settings.RegisterVerticalLayoutSubcategory(mainCategory, "Unit Frames")
+    local unitFramesCategory, unitFramesLayout = Settings.RegisterVerticalLayoutSubcategory(mainCategory, "Unit Frames")
     Settings.RegisterAddOnCategory(unitFramesCategory)
 
-	  layout:AddInitializer(CreateSettingsListSectionHeaderInitializer("Player"));
+	  unitFramesLayout:AddInitializer(CreateSettingsListSectionHeaderInitializer("Player"));
     do
         local name = "Name bar class color"
         local variable = "PlayerReputationClassColor"
@@ -246,7 +246,7 @@ local function InitializeSettings()
         SetValue(GetValue())
     end
 
-    layout:AddInitializer(CreateSettingsListSectionHeaderInitializer("Target and Focus"))
+    unitFramesLayout:AddInitializer(CreateSettingsListSectionHeaderInitializer("Target and Focus"))
     do
         local name = "Name bar class color"
         local variable = "TargetFocusReputationBarClassColor"
@@ -381,9 +381,22 @@ local function InitializeSettings()
         SetValue(GetValue())
     end
     -- Key Bindings category
-    local keyBindingsCategory, _ = Settings.RegisterVerticalLayoutSubcategory(mainCategory, "Key Bindings")
+    local keyBindingsCategory, keyBindingsLayout = Settings.RegisterVerticalLayoutSubcategory(mainCategory, "Key Bindings")
     Settings.RegisterAddOnCategory(keyBindingsCategory)
 
+    do
+        local action = "LIMA_UI_OPEN"
+        _G["BINDING_NAME_"..action] = "Open Lima UI"
+        local bindingIndex = C_KeyBindings.GetBindingIndex(action)
+        local initializer = CreateKeybindingEntryInitializer(bindingIndex, true)
+        keyBindingsLayout:AddInitializer(initializer)
+
+        local action = "LIMA_UI_RELOAD"
+        _G["BINDING_NAME_"..action] = "Reload UI"
+        local bindingIndex = C_KeyBindings.GetBindingIndex(action)
+        local initializer = CreateKeybindingEntryInitializer(bindingIndex, true)
+        keyBindingsLayout:AddInitializer(initializer)
+    end
 end
 
 addon.InitializeSettings = InitializeSettings

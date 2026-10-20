@@ -1,6 +1,5 @@
 local addonName, addon = ...
 
-
 addon.SlashCmd = {}
 
 function addon.SlashCmd.Open(msg, editBox)
