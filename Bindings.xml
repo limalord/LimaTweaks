@@ -1,0 +1,12 @@
+<Bindings>
+
+	<!-- Toggle panel -->
+	<Binding name="LIMA_UI_GLOBAL_TOGGLE" category = "Lima UI">
+		SlashCmdList["LIMA_UI"]()
+	</Binding>
+
+  <!-- Hearthstone -->
+  <!-- Focus Mouseover -->
+  <!-- /sit -->
+  <!-- Reload -->
+</Bindings>
