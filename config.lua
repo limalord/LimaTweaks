@@ -1,7 +1,7 @@
 local addonName, addon = ...
 
 local function InitializeSettings()
-    -- mainCategory
+    -- Main LimaUI category
     local mainCategory, _ = Settings.RegisterVerticalLayoutCategory(addonName)
     addon.settingsCategory = mainCategory
     Settings.RegisterAddOnCategory(mainCategory)
@@ -58,7 +58,7 @@ local function InitializeSettings()
         SetValue(GetValue())
     end
 
-    -- uiScaleCategory
+    -- Interface Scaling category
     local uiScaleCategory, _ = Settings.RegisterVerticalLayoutSubcategory(mainCategory, "Interface Scaling")
     Settings.RegisterAddOnCategory(uiScaleCategory)
 
@@ -171,12 +171,23 @@ local function InitializeSettings()
     end
 
 
-    -- unitFramesCategory
+    -- Unit Frames category
     local unitFramesCategory, layout = Settings.RegisterVerticalLayoutSubcategory(mainCategory, "Unit Frames")
     Settings.RegisterAddOnCategory(unitFramesCategory)
+
 	  layout:AddInitializer(CreateSettingsListSectionHeaderInitializer("Player"));
     do
-        local function TogglePlayerReputationClassColor(enable)
+        local name = "Reputation class color"
+        local variable = "PlayerReputationClassColor"
+        local defaultValue = false
+        local tooltip = "Adds class color to the Player reputation bar."
+
+        local function GetValue()
+            return addon.database.PlayerReputationClassColor or defaultValue
+        end
+
+        local function SetValue(value)
+            addon.database.PlayerReputationClassColor = enable
             frame = addon.session.PlayerReputationClassColorFrame
 
             if frame then
@@ -202,113 +213,103 @@ local function InitializeSettings()
             end
         end
 
-        local name = "Reputation class color"
-        local variable = "PlayerReputationClassColor"
+        local setting = Settings.RegisterProxySetting(unitFramesCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
+        Settings.CreateCheckbox(unitFramesCategory, setting, tooltip)
+        SetValue(GetValue())
+    end
+
+    do
+        local name = "Health Bar class color"
+        local variable = "PlayerHealthBarClassColor"
         local defaultValue = false
-        local tooltip = "Adds class color to the player reputation bar."
+        local tooltip = "Adds class color to the Player health bar."
 
         local function GetValue()
-            return addon.database.PlayerReputationClassColor or defaultValue
+            return addon.database.PlayerHealthBarClassColor or defaultValue
         end
 
         local function SetValue(value)
-            TogglePlayerReputationClassColor(value)
-            addon.database.PlayerReputationClassColor = value
+            addon.database.PlayerHealthBarClassColor = enable
+            local PlayerHealthBarFrame = PlayerFrame.PlayerFrameContent.PlayerFrameContentMain.HealthBarsContainer.HealthBar
+            if enable then
+                PlayerHealthBarFrame:SetStatusBarDesaturated(true)
+                PlayerHealthBarFrame:SetStatusBarColor(addon.session.PlayerColor.r, addon.session.PlayerColor.g, addon.session.PlayerColor.b)
+            else
+                PlayerHealthBarFrame:SetStatusBarDesaturated(false)
+                PlayerHealthBarFrame:SetStatusBarColor(0, 1, 0, 1)
+            end
         end
 
         local setting = Settings.RegisterProxySetting(unitFramesCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
         Settings.CreateCheckbox(unitFramesCategory, setting, tooltip)
         SetValue(GetValue())
     end
-        
-    -- local function AddClassColors()
-    --     local c = RAID_CLASS_COLORS[select(2, UnitClass("player"))]
-    --     local PlayBarFN = PlayerFrame.PlayerFrameContent.PlayerFrameContentMain.HealthBarsContainer.HealthBar
-    -- 
-    --     PlayBarFN:SetStatusBarDesaturated(true)
-    --     if c then PlayBarFN:SetStatusBarColor(c.r, c.g, c.b, 1) end
-    -- 
-    --     if addon.database.ClassColorsOn then
-    --         addon.database.ClassColorsTexture:Show()
-    --         return
-    --     end
-    --     -- Create background frame for player frame
-    --     local PlayFN = PlayerFrame.PlayerFrameContent.PlayerFrameContentMain:CreateTexture(nil, "BACKGROUND")
-    -- 
-    --     PlayFN:SetAtlas("UI-HUD-UnitFrame-Target-PortraitOn-Type", true)
-    --     PlayFN:SetTexCoord(1, 0, 0, 1)
-    --     PlayFN:ClearAllPoints()
-    --     PlayFN:SetPoint("TOPLEFT", 75, -25)
-    --     addon.database.ClassColorsOn = true
-    --     addon.database.ClassColorsTexture = PlayFN
-    --     addon.database.ClassColorsBarTexture = PlayBarFN
-    -- 
-    --     if c then
-    --         PlayFN:SetVertexColor(c.r, c.g, c.b)
-    --     end
-    -- 
-    -- 
-    --     -- Create color function for target and focus frames
-    --     local function TargetFrameCol()
-    --         if UnitIsPlayer("target") then
-    --             local c = RAID_CLASS_COLORS[select(2, UnitClass("target"))]
-    --             if c then TargetFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor:SetVertexColor(c.r, c.g, c.b) end
-    --         end
-    --         if UnitIsPlayer("focus") then
-    --             local c = RAID_CLASS_COLORS[select(2, UnitClass("focus"))]
-    --             if c then FocusFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor:SetVertexColor(c.r, c.g, c.b) end
-    --         end
-    --     end
-    -- 
-    --     local ColTar = CreateFrame("FRAME")
-    --     ColTar:SetScript("OnEvent", TargetFrameCol) -- Events are registered if target option is enabled
-    -- 
-    --     -- Function to set class colored frames
-    --     local function SetClassColFrames()
-    --         -- Player frame
-    --         PlayFN:Show()
-    --         ColTar:RegisterEvent("GROUP_ROSTER_UPDATE")
-    --         ColTar:RegisterEvent("PLAYER_TARGET_CHANGED")
-    --         ColTar:RegisterEvent("PLAYER_FOCUS_CHANGED")
-    --         ColTar:RegisterEvent("UNIT_FACTION")
-    --         TargetFrameCol()
-    --     end
-    -- 
-    --     SetClassColFrames()
-    -- end
-    -- 
-    -- local function RemoveClassColors()
-    --     if addon.database.ClassColorsOn then
-    --         addon.database.ClassColorsTexture:Hide()
-    --         addon.database.ClassColorsBarTexture:SetStatusBarDesaturated(false)
-    --         addon.database.ClassColorsBarTexture:SetStatusBarColor(0, 1, 0, 1)
-    --     end
-    -- end
-    -- 
-    -- local name = "Add class colors"
-    -- local variable = "AddClassColors"
-    -- local defaultValue = false
-    -- local tooltip = "Adds class color to the reputation bar."
-    -- 
-    -- local function GetValue()
-    --     return addon.database.AddClassColors or defaultValue
-    -- end
-    -- 
-    -- local function SetValue(value)
-    --     if value then
-    --         AddClassColors()
-    --     else
-    --         RemoveClassColors()
-    --     end
-    --     addon.database.AddClassColors = value
-    -- end
-    -- 
-    -- local setting = Settings.RegisterProxySetting(unitFramesCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
-    -- Settings.CreateCheckbox(unitFramesCategory, setting, tooltip)
-    -- 
-    -- addon.database.ClassColorsOn = false
-    -- SetValue(GetValue())
+
+    layout:AddInitializer(CreateSettingsListSectionHeaderInitializer("Target and Focus"))
+    do
+        local name = "Reputation Bar class color"
+        local variable = "TargetFocusReputationBarClassColor"
+        local defaultValue = false
+        local tooltip = "Adds class color to the Target reputation bar."
+
+        local function ColorFrameReputationBar()
+            if UnitIsPlayer("target") then
+                local c = RAID_CLASS_COLORS[select(2, UnitClass("target"))]
+                if c then TargetFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor:SetVertexColor(c.r, c.g, c.b) end
+            end
+            if UnitIsPlayer("focus") then
+                local c = RAID_CLASS_COLORS[select(2, UnitClass("focus"))]
+                if c then FocusFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor:SetVertexColor(c.r, c.g, c.b) end
+            end
+        end
+
+        local function UncolorFrameReputationBar()
+            if UnitIsPlayer("target") then
+                local c = RAID_CLASS_COLORS[select(2, UnitClass("target"))]
+                if c then TargetFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor:SetVertexColor(0, 1, 0, 1) end
+            end
+            if UnitIsPlayer("focus") then
+                local c = RAID_CLASS_COLORS[select(2, UnitClass("focus"))]
+                if c then FocusFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor:SetVertexColor(0, 1, 0, 1) end
+            end
+        end
+
+        local function CreateFrame()
+            local EmptyColorFrame = CreateFrame("FRAME")
+            EmptyColorFrame:SetScript("OnEvent", ColorFrameReputationBar)
+            addon.session.EmptyColorFrame = EmptyColorFrame
+        end
+
+        local function RegisterEvents()
+            addon.session.EmptyColorFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
+            addon.session.EmptyColorFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
+            addon.session.EmptyColorFrame:RegisterEvent("PLAYER_FOCUS_CHANGED")
+            addon.session.EmptyColorFrame:RegisterEvent("UNIT_FACTION")
+        end
+    
+        local function GetValue()
+            return addon.database.TargetFocusReputationBarClassColor or defaultValue
+        end
+
+        local function SetValue(value)
+            if addon.session.EmptyColorFrame then
+                if not value then
+                    addon.session.EmptyColorFrame:UnregisterAllEvents()
+                    UncolorFrameReputationBar()
+                end
+                return
+            end
+            if value then
+                CreateFrame()
+                RegisterEvents()
+                ColorFrameReputationBar() -- TODO do I really need this on reload?
+            end
+        end
+
+        local setting = Settings.RegisterProxySetting(unitFramesCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
+        Settings.CreateCheckbox(unitFramesCategory, setting, tooltip)
+        SetValue(GetValue())
+    end
 end
 
 addon.InitializeSettings = InitializeSettings
-
