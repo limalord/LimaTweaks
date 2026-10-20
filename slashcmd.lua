@@ -19,9 +19,9 @@ function addon.SlashCmd.Outfits(msg, editBox)
             frame:Show()
         else
             TransmogFrameTitleText:SetText("Outfits (Preview)")
-		        for _, key in ipairs(FramesNames.Buttons) do
-			          frame.OutfitCollection[key]:SetShown(false)
-		        end
+            for _, key in ipairs(FramesNames.Buttons) do
+                frame.OutfitCollection[key]:SetShown(false)
+            end
             frame.WardrobeCollection.TabHeaders.tabs[4]:SetShown(false)
             frame:Show()
         end
@@ -30,15 +30,15 @@ function addon.SlashCmd.Outfits(msg, editBox)
     function CleanupFrame()
         local frame = TransmogFrame
         frame:Hide()
-		    for _, key in ipairs(FramesNames.Buttons) do
-			      frame.OutfitCollection[key]:SetShown(true)
-		    end
+        for _, key in ipairs(FramesNames.Buttons) do
+            frame.OutfitCollection[key]:SetShown(true)
+        end
         frame.WardrobeCollection.TabHeaders.tabs[3]:SetShown(true)
     end
 
     if not TransmogFrame then
         Transmog_LoadUI()
-		    TransmogFrame:HookScript("OnShow", ShowFrame)
+        TransmogFrame:HookScript("OnShow", ShowFrame)
         TransmogFrame:HookScript("OnHide", CleanupFrame)
     end
 

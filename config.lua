@@ -22,22 +22,21 @@ local function InitializeSettings()
 
         local function SetValue(value)
             local alpha = value and 0 or 1
-			      for i = 1, 12 do
-				        _G["ActionButton"..i.."HotKey"]:SetAlpha(alpha)
-				        _G["MultiBarBottomRightButton"..i.."HotKey"]:SetAlpha(alpha)
-				        _G["MultiBarBottomLeftButton"..i.."HotKey"]:SetAlpha(alpha)
-				        _G["MultiBarRightButton"..i.."HotKey"]:SetAlpha(alpha)
-				        _G["MultiBarLeftButton"..i.."HotKey"]:SetAlpha(alpha)
-				        _G["MultiBar5Button" .. i .. "HotKey"]:SetAlpha(alpha)
-				        _G["MultiBar6Button" .. i .. "HotKey"]:SetAlpha(alpha)
-				        _G["MultiBar7Button" .. i .. "HotKey"]:SetAlpha(alpha)
-			      end
+            for i = 1, 12 do
+                _G["ActionButton"..i.."HotKey"]:SetAlpha(alpha)
+                _G["MultiBarBottomRightButton"..i.."HotKey"]:SetAlpha(alpha)
+                _G["MultiBarBottomLeftButton"..i.."HotKey"]:SetAlpha(alpha)
+                _G["MultiBarRightButton"..i.."HotKey"]:SetAlpha(alpha)
+                _G["MultiBarLeftButton"..i.."HotKey"]:SetAlpha(alpha)
+                _G["MultiBar5Button" .. i .. "HotKey"]:SetAlpha(alpha)
+                _G["MultiBar6Button" .. i .. "HotKey"]:SetAlpha(alpha)
+                _G["MultiBar7Button" .. i .. "HotKey"]:SetAlpha(alpha)
+            end
             addon.database.HideKeybindingsText = value
         end
 
         local setting = Settings.RegisterProxySetting(minimalismCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
         Settings.CreateCheckbox(minimalismCategory, setting, tooltip)
-
         SetValue(GetValue())
     end
 
@@ -53,22 +52,21 @@ local function InitializeSettings()
 
         local function SetValue(value)
             local alpha = value and 0 or 1
-			      for i = 1, 12 do
-				        _G["ActionButton"..i.."Name"]:SetAlpha(alpha)
-				        _G["MultiBarBottomRightButton"..i.."Name"]:SetAlpha(alpha)
-				        _G["MultiBarBottomLeftButton"..i.."Name"]:SetAlpha(alpha)
-				        _G["MultiBarRightButton"..i.."Name"]:SetAlpha(alpha)
-				        _G["MultiBarLeftButton"..i.."Name"]:SetAlpha(alpha)
-				        _G["MultiBar5Button" .. i .. "Name"]:SetAlpha(alpha)
-				        _G["MultiBar6Button" .. i .. "Name"]:SetAlpha(alpha)
-				        _G["MultiBar7Button" .. i .. "Name"]:SetAlpha(alpha)
-			      end
+            for i = 1, 12 do
+                _G["ActionButton"..i.."Name"]:SetAlpha(alpha)
+                _G["MultiBarBottomRightButton"..i.."Name"]:SetAlpha(alpha)
+                _G["MultiBarBottomLeftButton"..i.."Name"]:SetAlpha(alpha)
+                _G["MultiBarRightButton"..i.."Name"]:SetAlpha(alpha)
+                _G["MultiBarLeftButton"..i.."Name"]:SetAlpha(alpha)
+                _G["MultiBar5Button" .. i .. "Name"]:SetAlpha(alpha)
+                _G["MultiBar6Button" .. i .. "Name"]:SetAlpha(alpha)
+                _G["MultiBar7Button" .. i .. "Name"]:SetAlpha(alpha)
+            end
             addon.database.HideMacroText = value
         end
 
         local setting = Settings.RegisterProxySetting(minimalismCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
         Settings.CreateCheckbox(minimalismCategory, setting, tooltip)
-
         SetValue(GetValue())
     end
 
@@ -82,20 +80,20 @@ local function InitializeSettings()
             return addon.database.HideStanceBar or defaultValue
         end
 
-			  local EmptyStanceBar = CreateFrame("FRAME", nil, UIParent)
+        local EmptyStanceBar = CreateFrame("FRAME", nil, UIParent)
         EmptyStanceBar:Hide()
+
         local function SetValue(value)
             if value then
-			          StanceBar:SetParent(EmptyStanceBar)
+                StanceBar:SetParent(EmptyStanceBar)
             else
-			          StanceBar:SetParent(UIParent)
+                StanceBar:SetParent(UIParent)
             end
             addon.database.HideStanceBar = value
         end
 
         local setting = Settings.RegisterProxySetting(minimalismCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
         Settings.CreateCheckbox(minimalismCategory, setting, tooltip)
-
         SetValue(GetValue())
     end
 
@@ -111,16 +109,15 @@ local function InitializeSettings()
 
         local function SetValue(value)
             if value then
-			          PlayerFrame.PlayerFrameContent.PlayerFrameContentMain.HitIndicator:Hide()
+                PlayerFrame.PlayerFrameContent.PlayerFrameContentMain.HitIndicator:Hide()
             else
-			          PlayerFrame.PlayerFrameContent.PlayerFrameContentMain.HitIndicator:Show()
+                PlayerFrame.PlayerFrameContent.PlayerFrameContentMain.HitIndicator:Show()
             end
             addon.database.HidePortraitHitIndicator = value
         end
 
         local setting = Settings.RegisterProxySetting(minimalismCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
         Settings.CreateCheckbox(minimalismCategory, setting, tooltip)
-
         SetValue(GetValue())
     end
 
@@ -147,7 +144,6 @@ local function InitializeSettings()
 
         local setting = Settings.RegisterProxySetting(minimalismCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
         Settings.CreateCheckbox(minimalismCategory, setting, tooltip)
-
         SetValue(GetValue())
     end
 
@@ -172,7 +168,6 @@ local function InitializeSettings()
 
         local setting = Settings.RegisterProxySetting(minimalismCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
         Settings.CreateCheckbox(minimalismCategory, setting, tooltip)
-
         SetValue(GetValue())
     end
 
@@ -190,11 +185,10 @@ local function InitializeSettings()
             if value then BagsBar:Hide() else BagsBar:Show() end
             addon.database.HideBagBar = value
         end
-        addon.SetBagsVisibility = SetValue
 
+        addon.SetBagsVisibility = SetValue
         local setting = Settings.RegisterProxySetting(minimalismCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
         Settings.CreateCheckbox(minimalismCategory, setting, tooltip)
-
         SetValue(GetValue())
     end
 
@@ -223,7 +217,6 @@ local function InitializeSettings()
 
         local setting = Settings.RegisterProxySetting(minimalismCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
         Settings.CreateCheckbox(minimalismCategory, setting, tooltip)
-
         SetValue(GetValue())
     end
 
@@ -251,11 +244,9 @@ local function InitializeSettings()
         end
 
         local setting = Settings.RegisterProxySetting(mainCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
-
         local options = Settings.CreateSliderOptions(minValue, maxValue, step)
         options:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right, FormatPercentageRounded)
         Settings.CreateSlider(uiScaleCategory, setting, options, tooltip)
-
         SetValue(GetValue())
     end
 
@@ -278,11 +269,9 @@ local function InitializeSettings()
         end
 
         local setting = Settings.RegisterProxySetting(mainCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
-
         local options = Settings.CreateSliderOptions(minValue, maxValue, step)
         options:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right, FormatPercentageRounded)
         Settings.CreateSlider(uiScaleCategory, setting, options, tooltip)
-
         SetValue(GetValue())
     end
 
@@ -300,9 +289,9 @@ local function InitializeSettings()
         end
 
         local function SetValue(value)
-	          if not PlayerSpellsFrame then
-		            PlayerSpellsFrame_LoadUI()
-	          end
+            if not PlayerSpellsFrame then
+                PlayerSpellsFrame_LoadUI()
+            end
             PlayerSpellsFrame:HookScript("OnShow", function(self)
                 PlayerSpellsFrame:SetScale(value)
             end)
@@ -310,11 +299,9 @@ local function InitializeSettings()
         end
 
         local setting = Settings.RegisterProxySetting(mainCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
-
         local options = Settings.CreateSliderOptions(minValue, maxValue, step)
         options:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right, FormatPercentageRounded)
         Settings.CreateSlider(uiScaleCategory, setting, options, tooltip)
-
         SetValue(GetValue())
     end
 
@@ -332,9 +319,9 @@ local function InitializeSettings()
         end
 
         local function SetValue(value)
-	          if not LegacySystemFrame then
-		            LegacySystemFrame_LoadUI()
-	          end
+            if not LegacySystemFrame then
+                LegacySystemFrame_LoadUI()
+            end
             LegacySystemFrame:HookScript("OnShow", function(self)
                 LegacySystemFrame:SetScale(value)
             end)
@@ -342,11 +329,9 @@ local function InitializeSettings()
         end
 
         local setting = Settings.RegisterProxySetting(mainCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
-
         local options = Settings.CreateSliderOptions(minValue, maxValue, step)
         options:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right, FormatPercentageRounded)
         Settings.CreateSlider(uiScaleCategory, setting, options, tooltip)
-
         SetValue(GetValue())
     end
 
@@ -364,9 +349,9 @@ local function InitializeSettings()
         end
 
         local function SetValue(value)
-	          if not CommunitiesFrame then
-		            CommunitiesFrame_LoadUI()
-	          end
+            if not CommunitiesFrame then
+                CommunitiesFrame_LoadUI()
+            end
             CommunitiesFrame:HookScript("OnShow", function(self)
                 CommunitiesFrame:SetScale(value)
             end)
@@ -374,11 +359,9 @@ local function InitializeSettings()
         end
 
         local setting = Settings.RegisterProxySetting(mainCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
-
         local options = Settings.CreateSliderOptions(minValue, maxValue, step)
         options:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right, FormatPercentageRounded)
         Settings.CreateSlider(uiScaleCategory, setting, options, tooltip)
-
         SetValue(GetValue())
     end
 
@@ -396,9 +379,9 @@ local function InitializeSettings()
         end
 
         local function SetValue(value)
-	          if not CollectionsJournal then
-		            CollectionsJournal_LoadUI()
-	          end
+            if not CollectionsJournal then
+                CollectionsJournal_LoadUI()
+            end
             CollectionsJournal:HookScript("OnShow", function(self)
                 CollectionsJournal:SetScale(value)
             end)
@@ -406,11 +389,9 @@ local function InitializeSettings()
         end
 
         local setting = Settings.RegisterProxySetting(mainCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
-
         local options = Settings.CreateSliderOptions(minValue, maxValue, step)
         options:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right, FormatPercentageRounded)
         Settings.CreateSlider(uiScaleCategory, setting, options, tooltip)
-
         SetValue(GetValue())
     end
 
@@ -433,7 +414,6 @@ local function InitializeSettings()
         end
 
         local setting = Settings.RegisterProxySetting(mainCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
-
         local options = Settings.CreateSliderOptions(minValue, maxValue, step)
         options:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right, FormatPercentageRounded)
         Settings.CreateSlider(uiScaleCategory, setting, options, tooltip)
@@ -459,11 +439,9 @@ local function InitializeSettings()
         end
 
         local setting = Settings.RegisterProxySetting(mainCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
-
         local options = Settings.CreateSliderOptions(minValue, maxValue, step)
         options:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right, FormatPercentageRounded)
         Settings.CreateSlider(uiScaleCategory, setting, options, tooltip)
-
         SetValue(GetValue())
     end
 
@@ -481,9 +459,9 @@ local function InitializeSettings()
         end
 
         local function SetValue(value)
-	          if not ProfessionsFrame then
-		            ProfessionsFrame_LoadUI()
-	          end
+            if not ProfessionsFrame then
+                ProfessionsFrame_LoadUI()
+            end
             ProfessionsFrame:HookScript("OnShow", function(self)
                 ProfessionsFrame:SetScale(value)
             end)
@@ -491,11 +469,9 @@ local function InitializeSettings()
         end
 
         local setting = Settings.RegisterProxySetting(mainCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
-
         local options = Settings.CreateSliderOptions(minValue, maxValue, step)
         options:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right, FormatPercentageRounded)
         Settings.CreateSlider(uiScaleCategory, setting, options, tooltip)
-
         SetValue(GetValue())
     end
 
@@ -518,11 +494,9 @@ local function InitializeSettings()
         end
 
         local setting = Settings.RegisterProxySetting(mainCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
-
         local options = Settings.CreateSliderOptions(minValue, maxValue, step)
         options:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right, FormatPercentageRounded)
         Settings.CreateSlider(uiScaleCategory, setting, options, tooltip)
-
         SetValue(GetValue())
     end
 
@@ -545,11 +519,9 @@ local function InitializeSettings()
         end
 
         local setting = Settings.RegisterProxySetting(mainCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
-
         local options = Settings.CreateSliderOptions(minValue, maxValue, step)
         options:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right, FormatPercentageRounded)
         Settings.CreateSlider(uiScaleCategory, setting, options, tooltip)
-
         SetValue(GetValue())
     end
 
@@ -583,11 +555,9 @@ local function InitializeSettings()
         end
 
         local setting = Settings.RegisterProxySetting(mainCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
-
         local options = Settings.CreateSliderOptions(minValue, maxValue, step)
         options:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right, FormatPercentageRounded)
         Settings.CreateSlider(uiScaleCategory, setting, options, tooltip)
-
         SetValue(GetValue())
     end
 
@@ -596,7 +566,7 @@ local function InitializeSettings()
     local unitFramesCategory, unitFramesLayout = Settings.RegisterVerticalLayoutSubcategory(mainCategory, "Unit Frames")
     Settings.RegisterAddOnCategory(unitFramesCategory)
 
-	  unitFramesLayout:AddInitializer(CreateSettingsListSectionHeaderInitializer("Player"));
+      unitFramesLayout:AddInitializer(CreateSettingsListSectionHeaderInitializer("Player"));
     do
         local name = "Name class color"
         local variable = "PlayerNameClassColor"
@@ -710,8 +680,8 @@ local function InitializeSettings()
                 ColorFrameName()
             else
                 UnregisterEvents()
-					      TargetFrame.CheckFaction(TargetFrame)
-					      TargetFrame.CheckFaction(FocusFrame)
+                TargetFrame.CheckFaction(TargetFrame)
+                TargetFrame.CheckFaction(FocusFrame)
             end
         end
 
@@ -779,8 +749,8 @@ local function InitializeSettings()
                 ColorFrameName()
             else
                 UnregisterEvents()
-					      TargetFrame.CheckFaction(TargetFrame)
-					      TargetFrame.CheckFaction(FocusFrame)
+                TargetFrame.CheckFaction(TargetFrame)
+                TargetFrame.CheckFaction(FocusFrame)
             end
         end
 
@@ -866,6 +836,7 @@ local function InitializeSettings()
         Settings.CreateCheckbox(unitFramesCategory, setting, tooltip)
         SetValue(GetValue())
     end
+
     -- Key Bindings category
     local keyBindingsCategory, keyBindingsLayout = Settings.RegisterVerticalLayoutSubcategory(mainCategory, "Key Bindings")
     Settings.RegisterAddOnCategory(keyBindingsCategory)
@@ -877,15 +848,14 @@ local function InitializeSettings()
         local initializer = CreateKeybindingEntryInitializer(bindingIndex, true)
         keyBindingsLayout:AddInitializer(initializer)
 
-        if not GetMacroInfo("LIMA_TWEAKS_OUTFITS") then
-            CreateMacro("LIMA_TWEAKS_OUTFITS", 135056, "/luioutfits", false)
-        end
-
         local action = "LIMA_TWEAKS_OPEN_OUTFITS"
         _G["BINDING_NAME_"..action] = "Open Outfits"
         local bindingIndex = C_KeyBindings.GetBindingIndex(action)
         local initializer = CreateKeybindingEntryInitializer(bindingIndex, true)
         keyBindingsLayout:AddInitializer(initializer)
+        if not GetMacroInfo("LIMA_TWEAKS_OUTFITS") then
+            CreateMacro("LIMA_TWEAKS_OUTFITS", 135056, "/luioutfits", false)
+        end
 
         local action = "LIMA_TWEAKS_RELOAD"
         _G["BINDING_NAME_"..action] = "Reload UI"
@@ -899,15 +869,14 @@ local function InitializeSettings()
         local initializer = CreateKeybindingEntryInitializer(bindingIndex, true)
         keyBindingsLayout:AddInitializer(initializer)
 
-        if not GetMacroInfo("LIMA_TWEAKS_FOCUS") then
-            CreateMacro("LIMA_TWEAKS_FOCUS", 132284, "/focus [@mouseover,exists][]", false)
-        end
-
         local action = "MACRO LIMA_TWEAKS_FOCUS"
         _G["BINDING_NAME_"..action] = "Focus Mouseover"
         local bindingIndex = C_KeyBindings.GetBindingIndex(action)
         local initializer = CreateKeybindingEntryInitializer(bindingIndex, true)
         keyBindingsLayout:AddInitializer(initializer)
+        if not GetMacroInfo("LIMA_TWEAKS_FOCUS") then
+            CreateMacro("LIMA_TWEAKS_FOCUS", 132284, "/focus [@mouseover,exists][]", false)
+        end
     end
 
     -- Automation category
@@ -919,15 +888,16 @@ local function InitializeSettings()
         local variable = "AutomationRepairGear"
         local defaultValue = false
         local tooltip = "Automatically repairs gear when a merchant window is open."
-			  local function RepairFunc()
-				    if CanMerchantRepair() then
-					      local RepairCost, CanRepair = GetRepairAllCost()
-					      if CanRepair then
+
+        local function RepairFunc()
+            if CanMerchantRepair() then
+                local RepairCost, CanRepair = GetRepairAllCost()
+                if CanRepair then
                     RepairAllItems()
-							      print("Repaired for "..C_CurrencyInfo.GetCoinText(RepairCost)..".")
-					      end
-				    end
-			  end
+                    print("Repaired for "..C_CurrencyInfo.GetCoinText(RepairCost)..".")
+                end
+            end
+        end
 
         local function GetValue()
             return addon.database.AutomationRepairGear or defaultValue
@@ -938,16 +908,15 @@ local function InitializeSettings()
 
         local function SetValue(value)
             if value then
-					      RepairFrame:RegisterEvent("MERCHANT_SHOW")
-				    else
-					      RepairFrame:UnregisterEvent("MERCHANT_SHOW")
+                RepairFrame:RegisterEvent("MERCHANT_SHOW")
+            else
+                RepairFrame:UnregisterEvent("MERCHANT_SHOW")
             end
             addon.database.AutomationRepairGear = value
         end
 
         local setting = Settings.RegisterProxySetting(automationCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
         Settings.CreateCheckbox(automationCategory, setting, tooltip)
-
         SetValue(GetValue())
     end
 
@@ -964,26 +933,26 @@ local function InitializeSettings()
         local tDelay = 0
         local lootDelay = 0.3 -- setting delay lower than this doesn't improve results
 
-			  local function FastLoot()
-				    if GetTime() - tDelay >= lootDelay then
-					      tDelay = GetTime()
-					      if GetCVarBool("autoLootDefault") ~= IsModifiedClick("AUTOLOOTTOGGLE") then
-						        for i = GetNumLootItems(), 1, -1 do
-							          LootSlot(i)
-						        end
-						        tDelay = GetTime()
-					      end
-				    end
-			  end
+        local function FastLoot()
+            if GetTime() - tDelay >= lootDelay then
+                tDelay = GetTime()
+                if GetCVarBool("autoLootDefault") ~= IsModifiedClick("AUTOLOOTTOGGLE") then
+                    for i = GetNumLootItems(), 1, -1 do
+                        LootSlot(i)
+                    end
+                    tDelay = GetTime()
+                end
+            end
+        end
 
-			  local FastLootFrame = CreateFrame("Frame")
-			  FastLootFrame:SetScript("OnEvent", FastLoot)
+        local FastLootFrame = CreateFrame("Frame")
+        FastLootFrame:SetScript("OnEvent", FastLoot)
 
         local function SetValue(value)
             if value then
-			          FastLootFrame:RegisterEvent("LOOT_READY")
-				    else
-			          FastLootFrame:UnregisterEvent("LOOT_READY")
+                FastLootFrame:RegisterEvent("LOOT_READY")
+            else
+                FastLootFrame:UnregisterEvent("LOOT_READY")
             end
             addon.database.FastLoot = value
         end
@@ -1117,7 +1086,7 @@ local function InitializeSettings()
                 getValue, setValue, getDefaultValue = Settings.CreateCVarAccessorClosures(info.cvar, info.varType)
                 defaultValue = getDefaultValue()
                 tooltip = info.tooltip.." (Default: "..tostring(defaultValue)..")"
-		            local setting = Settings.RegisterProxySetting(variablesCategory, info.name, type(defaultValue), info.name, defaultValue, getValue, setValue);
+                local setting = Settings.RegisterProxySetting(variablesCategory, info.name, type(defaultValue), info.name, defaultValue, getValue, setValue);
                 local options
                 if info.varType == Settings.VarType.Boolean then
                     Settings.CreateCheckbox(variablesCategory, setting, tooltip)

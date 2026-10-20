@@ -1,6 +1,5 @@
 local addonName, addon = ...
 
-
 local function EventHandler(self, event, arg1, arg2, arg3, ...)
     if event == "PLAYER_LOGIN" then
         if not LimaTweaksDB then LimaTweaksDB = {} end
