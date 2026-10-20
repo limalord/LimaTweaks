@@ -924,58 +924,16 @@ local function InitializeSettings()
 
     do
         local variablesList = {
-            [1] = { name = "Image Quality", separator = true },
+            [1] = { name = "Interface", separator = true },
             [2] = {
-                cvar = "ResampleAlwaysSharpen",
-                name = "Resample Always Sharpen",
+                cvar = "rotateMinimap",
+                name = "Rotate Minimap",
                 varType = Settings.VarType.Number,
                 format = Formatter,
                 min = 0, max = 1, step = 1,
-                tooltip = "Forces always-on image sharpening. Also check Resample Quality and Resample Sharpness in the Graphics options."
+                tooltip = "Rotates minimap."
             },
-            [3] = { name = "Ground Effects", separator = true },
-            [4] = {
-                cvar = "groundEffectDist",
-                name = "Ground Effect Distance",
-                varType = Settings.VarType.Number,
-                format = Formatter,
-                min = 40, max = 500, step = 1,
-                tooltip = "Ground foliage max render distance."
-            },
-            [5] = {
-                cvar = "groundEffectFade",
-                name = "Ground Effect Fade",
-                varType = Settings.VarType.Number,
-                format = Formatter,
-                min = 0, max = 500, step = 1,
-                tooltip = "Controls how much distance the ground foliage fades over."
-            },
-            [6] = {
-                cvar = "groundEffectDensity",
-                name = "Ground Effect Density",
-                varType = Settings.VarType.Number,
-                format = Formatter,
-                min = 16, max = 256, step = 1,
-                tooltip = "Sets grass and ground foliage density level."
-            },
-            [7] = { name = "Miscellaneous", separator = true },
-            [8] = {
-                cvar = "weatherDensity",
-                name = "Weather Density",
-                varType = Settings.VarType.Number,
-                format = Formatter,
-                min = 0, max = 3, step = 1,
-                tooltip = "Controls the intensity of Weather effects such as rain and snow."
-            },
-            [9] = {
-                cvar = "reflectionMode",
-                name = "Reflection Mode",
-                varType = Settings.VarType.Number,
-                format = Formatter,
-                min = 0, max = 4, step = 1,
-                tooltip = "Render a second pass for realistic reflections on water, trees, and character models."
-            },
-            [10] = {
+            [3] = {
                 cvar = "cameraDistanceMaxZoomFactor",
                 name = "Max Camera Distance",
                 varType = Settings.VarType.Number,
@@ -983,8 +941,59 @@ local function InitializeSettings()
                 min = 1, max = 4, step = 0.1,
                 tooltip = "Set max camera zoom level."
             },
-            [11] = { name = "Object Culling", separator = true },
+            [4] = { name = "Graphics: Image Quality", separator = true },
+            [5] = {
+                cvar = "ResampleAlwaysSharpen",
+                name = "Resample Always Sharpen",
+                varType = Settings.VarType.Number,
+                format = Formatter,
+                min = 0, max = 1, step = 1,
+                tooltip = "Forces always-on image sharpening. Also check Resample Quality and Resample Sharpness in the Graphics options."
+            },
+            [6] = { name = "Graphics: Ground Effects", separator = true },
+            [7] = {
+                cvar = "groundEffectDist",
+                name = "Ground Effect Distance",
+                varType = Settings.VarType.Number,
+                format = Formatter,
+                min = 40, max = 500, step = 1,
+                tooltip = "Ground foliage max render distance."
+            },
+            [8] = {
+                cvar = "groundEffectFade",
+                name = "Ground Effect Fade",
+                varType = Settings.VarType.Number,
+                format = Formatter,
+                min = 0, max = 500, step = 1,
+                tooltip = "Controls how much distance the ground foliage fades over."
+            },
+            [9] = {
+                cvar = "groundEffectDensity",
+                name = "Ground Effect Density",
+                varType = Settings.VarType.Number,
+                format = Formatter,
+                min = 16, max = 256, step = 1,
+                tooltip = "Sets grass and ground foliage density level."
+            },
+            [10] = { name = "Graphics: Weather", separator = true },
+            [11] = {
+                cvar = "weatherDensity",
+                name = "Weather Density",
+                varType = Settings.VarType.Number,
+                format = Formatter,
+                min = 0, max = 3, step = 1,
+                tooltip = "Controls the intensity of Weather effects such as rain and snow."
+            },
             [12] = {
+                cvar = "reflectionMode",
+                name = "Reflection Mode",
+                varType = Settings.VarType.Number,
+                format = Formatter,
+                min = 0, max = 4, step = 1,
+                tooltip = "Render a second pass for realistic reflections on water, trees, and character models."
+            },
+            [13] = { name = "Graphics: Object Culling", separator = true },
+            [14] = {
                 cvar = "lodObjectCullDist",
                 name = "Object Culling Distance",
                 varType = Settings.VarType.Number,
@@ -992,7 +1001,7 @@ local function InitializeSettings()
                 min = 1, max = 120, step = 1,
                 tooltip = "Set Object Culling distance."
             },
-            [13] = {
+            [15] = {
                 cvar = "lodObjectCullSize",
                 name = "Object Culling Size",
                 varType = Settings.VarType.Number,
@@ -1000,7 +1009,7 @@ local function InitializeSettings()
                 min = 1, max = 60, step = 1,
                 tooltip = "Set Object Culling size."
             },
-            [14] = {
+            [16] = {
                 cvar = "lodObjectFadeScale",
                 name = "Object Fade Scale",
                 varType = Settings.VarType.Number,
@@ -1008,7 +1017,7 @@ local function InitializeSettings()
                 min = 50, max = 200, step = 1,
                 tooltip = "Set Object Culling fade scale."
             },
-            [15] = {
+            [17] = {
                 cvar = "lodObjectMinSize",
                 name = "Object Minimum Size",
                 varType = Settings.VarType.Number,
@@ -1016,7 +1025,7 @@ local function InitializeSettings()
                 min = 1, max = 200, step = 1,
                 tooltip = "Set Object Culling minimum size."
             },
-            [16] = {
+            [18] = {
                 cvar = "lodObjectSizeScale",
                 name = "Object Size Scale",
                 varType = Settings.VarType.Number,
