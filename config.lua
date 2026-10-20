@@ -870,6 +870,31 @@ local function InitializeSettings()
                 min = 16, max = 256, step = 1,
                 tooltip = "Sets grass and ground foliage density level."
             },
+            [7] = { name = "Miscellaneous", separator = true },
+            [8] = {
+                cvar = "weatherDensity",
+                name = "Weather Density",
+                varType = Settings.VarType.Number,
+                format = Formatter,
+                min = 0, max = 3, step = 1,
+                tooltip = "Controls the intensity of Weather effects such as rain and snow."
+            },
+            [9] = {
+                cvar = "reflectionMode",
+                name = "Reflection Mode",
+                varType = Settings.VarType.Number,
+                format = Formatter,
+                min = 0, max = 4, step = 1,
+                tooltip = "Render a second pass for realistic reflections on water, trees, and character models."
+            },
+            [10] = {
+                cvar = "cameraDistanceMaxZoomFactor",
+                name = "Max Camera Distance",
+                varType = Settings.VarType.Number,
+                format = FormatNumber,
+                min = 1, max = 4, step = 0.1,
+                tooltip = "Set max camera zoom level."
+            },
         }
         for i, info in ipairs(variablesList) do
             if info.separator then
