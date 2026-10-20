@@ -1,7 +1,7 @@
 local addonName, addon = ...
 
 local function InitializeSettings()
-    -- Main InterfaceTweaks category
+    -- Main LimaTweaks category
     local mainCategory, _ = Settings.RegisterVerticalLayoutCategory(addonName)
     addon.settingsCategory = mainCategory
     addon.settingsCategoryID = mainCategory:GetID()
@@ -805,23 +805,23 @@ local function InitializeSettings()
     Settings.RegisterAddOnCategory(keyBindingsCategory)
 
     do
-        local action = "INTERFACE_TWEAKS_OPEN"
-        _G["BINDING_NAME_"..action] = "Open Interface Tweaks"
+        local action = "LIMA_TWEAKS_OPEN"
+        _G["BINDING_NAME_"..action] = "Open Lima Tweaks"
         local bindingIndex = C_KeyBindings.GetBindingIndex(action)
         local initializer = CreateKeybindingEntryInitializer(bindingIndex, true)
         keyBindingsLayout:AddInitializer(initializer)
 
-        if not GetMacroInfo("INTERFACE_TWEAKS_OUTFITS") then
-            CreateMacro("INTERFACE_TWEAKS_OUTFITS", 135056, "/luioutfits", false)
+        if not GetMacroInfo("LIMA_TWEAKS_OUTFITS") then
+            CreateMacro("LIMA_TWEAKS_OUTFITS", 135056, "/luioutfits", false)
         end
 
-        local action = "INTERFACE_TWEAKS_OPEN_OUTFITS"
+        local action = "LIMA_TWEAKS_OPEN_OUTFITS"
         _G["BINDING_NAME_"..action] = "Open Outfits"
         local bindingIndex = C_KeyBindings.GetBindingIndex(action)
         local initializer = CreateKeybindingEntryInitializer(bindingIndex, true)
         keyBindingsLayout:AddInitializer(initializer)
 
-        local action = "INTERFACE_TWEAKS_RELOAD"
+        local action = "LIMA_TWEAKS_RELOAD"
         _G["BINDING_NAME_"..action] = "Reload UI"
         local bindingIndex = C_KeyBindings.GetBindingIndex(action)
         local initializer = CreateKeybindingEntryInitializer(bindingIndex, true)
@@ -833,11 +833,11 @@ local function InitializeSettings()
         local initializer = CreateKeybindingEntryInitializer(bindingIndex, true)
         keyBindingsLayout:AddInitializer(initializer)
 
-        if not GetMacroInfo("INTERFACE_TWEAKS_FOCUS") then
-            CreateMacro("INTERFACE_TWEAKS_FOCUS", 132284, "/focus [@mouseover,exists][]", false)
+        if not GetMacroInfo("LIMA_TWEAKS_FOCUS") then
+            CreateMacro("LIMA_TWEAKS_FOCUS", 132284, "/focus [@mouseover,exists][]", false)
         end
 
-        local action = "MACRO INTERFACE_TWEAKS_FOCUS"
+        local action = "MACRO LIMA_TWEAKS_FOCUS"
         _G["BINDING_NAME_"..action] = "Focus Mouseover"
         local bindingIndex = C_KeyBindings.GetBindingIndex(action)
         local initializer = CreateKeybindingEntryInitializer(bindingIndex, true)

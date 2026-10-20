@@ -1,4 +1,4 @@
-#+title: InterfaceTweaks
+#+title: LimaTweaks
 
 * About this addon
 
