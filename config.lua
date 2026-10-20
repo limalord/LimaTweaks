@@ -198,6 +198,36 @@ local function InitializeSettings()
         SetValue(GetValue())
     end
 
+    do
+        local name = "Hide Objectives Header"
+        local variable = "HideObjectiveTrackerHeader"
+        local defaultValue = false
+        local tooltip = "Hide Objective Tracker header when collapsed."
+
+        local function GetValue()
+            return addon.database.HideObjectiveTrackerHeader or defaultValue
+        end
+
+        local function SetValue(value)
+            if value and not addon.session.ObjectiveTrackerFrameHooked then
+                ObjectiveTrackerFrame.Header.MinimizeButton:HookScript("OnClick", function(self)
+                    if not addon.database.HideObjectiveTrackerHeader then return end
+                    local isCollapsed = ObjectiveTrackerFrame.isCollapsed
+                    ObjectiveTrackerFrame.Header.Background:SetAlpha(isCollapsed and 0 or 1)
+                    ObjectiveTrackerFrame.Header.Text:SetAlpha(isCollapsed and 0 or 1)
+                end)
+                addon.session.ObjectiveTrackerFrameHooked = true
+            end
+            addon.database.HideObjectiveTrackerHeader = value
+        end
+
+        local setting = Settings.RegisterProxySetting(minimalismCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
+        Settings.CreateCheckbox(minimalismCategory, setting, tooltip)
+
+        SetValue(GetValue())
+    end
+
+
     -- Interface Scaling category
     local uiScaleCategory, _ = Settings.RegisterVerticalLayoutSubcategory(mainCategory, "Interface Scaling")
     Settings.RegisterAddOnCategory(uiScaleCategory)
