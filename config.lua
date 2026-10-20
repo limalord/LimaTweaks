@@ -64,7 +64,7 @@ local function InitializeSettings()
     Settings.RegisterAddOnCategory(uiScaleCategory)
 
     do
-        local name = "Game Menu scale"
+        local name = "Game Menu"
         local variable = "GameMenuScale"
         local defaultValue = 1
         local minValue = 0.5
@@ -91,7 +91,7 @@ local function InitializeSettings()
     end
 
     do
-        local name = "World Map scale"
+        local name = "World Map"
         local variable = "WorldMapFrameScale"
         local defaultValue = 1
         local minValue = 0.5
@@ -118,13 +118,13 @@ local function InitializeSettings()
     end
 
     do
-        local name = "Talents pane"
+        local name = "Talent Pane and Spellbook"
         local variable = "PlayerSpellsFrameScale"
         local defaultValue = 1
         local minValue = 0.5
         local maxValue = 1.5
         local step = 0.01
-        local tooltip = "Adjust the Talents pane size to a more comfortable level."
+        local tooltip = "Adjust the Talents Pane and Spellbook size to a more comfortable level."
 
         local function GetValue()
             return addon.database.PlayerSpellsFrameScale or defaultValue
@@ -150,13 +150,13 @@ local function InitializeSettings()
     end
 
     do
-        local name = "Character pane"
+        local name = "Character Pane"
         local variable = "CharacterFrameScale"
         local defaultValue = 1
         local minValue = 0.5
         local maxValue = 1.5
         local step = 0.01
-        local tooltip = "Adjust the Character pane size to a more comfortable level."
+        local tooltip = "Adjust the Character Pane size to a more comfortable level."
 
         local function GetValue()
             return addon.database.CharacterFrameScale or defaultValue
@@ -177,13 +177,13 @@ local function InitializeSettings()
     end
 
     do
-        local name = "Professions pane"
+        local name = "Professions Pane"
         local variable = "ProfessionsFrameScale"
         local defaultValue = 1
         local minValue = 0.5
         local maxValue = 1.5
         local step = 0.01
-        local tooltip = "Adjust the Professions pane size to a more comfortable level."
+        local tooltip = "Adjust the Professions Pane size to a more comfortable level."
 
         local function GetValue()
             return addon.database.ProfessionsFrameScale or defaultValue
