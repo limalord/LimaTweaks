@@ -150,6 +150,70 @@ local function InitializeSettings()
     end
 
     do
+        local name = "Legacy Pane"
+        local variable = "LegacySystemFrameScale"
+        local defaultValue = 1
+        local minValue = 0.5
+        local maxValue = 1.5
+        local step = 0.01
+        local tooltip = "Adjust the Legacy Pane size to a more comfortable level."
+
+        local function GetValue()
+            return addon.database.LegacySystemFrameScale or defaultValue
+        end
+
+        local function SetValue(value)
+	          if not LegacySystemFrame then
+		            LegacySystemFrame_LoadUI()
+	          end
+            LegacySystemFrame:HookScript("OnShow", function(self)
+                LegacySystemFrame:SetScale(value)
+            end)
+            addon.database.LegacySystemFrameScale = value
+        end
+
+        local setting = Settings.RegisterProxySetting(mainCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
+
+        local options = Settings.CreateSliderOptions(minValue, maxValue, step)
+        options:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right, FormatPercentageRounded)
+        Settings.CreateSlider(uiScaleCategory, setting, options, tooltip)
+
+        SetValue(GetValue())
+    end
+
+    do
+        local name = "Guild Pane"
+        local variable = "CommunitiesFrameScale"
+        local defaultValue = 1
+        local minValue = 0.5
+        local maxValue = 1.5
+        local step = 0.01
+        local tooltip = "Adjust the Guild Pane size to a more comfortable level."
+
+        local function GetValue()
+            return addon.database.CommunitiesFrameScale or defaultValue
+        end
+
+        local function SetValue(value)
+	          if not CommunitiesFrame then
+		            CommunitiesFrame_LoadUI()
+	          end
+            CommunitiesFrame:HookScript("OnShow", function(self)
+                CommunitiesFrame:SetScale(value)
+            end)
+            addon.database.CommunitiesFrameScale = value
+        end
+
+        local setting = Settings.RegisterProxySetting(mainCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
+
+        local options = Settings.CreateSliderOptions(minValue, maxValue, step)
+        options:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right, FormatPercentageRounded)
+        Settings.CreateSlider(uiScaleCategory, setting, options, tooltip)
+
+        SetValue(GetValue())
+    end
+
+    do
         local name = "Character Pane"
         local variable = "CharacterFrameScale"
         local defaultValue = 1
