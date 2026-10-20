@@ -651,32 +651,28 @@ local function InitializeSettings()
     unitFramesLayout:AddInitializer(CreateSettingsListSectionHeaderInitializer("Target and Focus"))
     do
         local name = "Name class color"
-        local variable = "TargetFocusReputationClassColor"
+        local variable = "TargetFocusNameClassColor"
         local defaultValue = false
         local tooltip = "Adds class color to the Target and Focus name text."
 
         local function CleanupTarget()
             TargetFrame.TargetFrameContent.TargetFrameContentMain.Name:SetVertexColor(1, 0.82352942228317, 0)
-            TargetFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor:Show()
         end
 
         local function CleanupFocus()
             FocusFrame.TargetFrameContent.TargetFrameContentMain.Name:SetVertexColor(1, 0.82352942228317, 0)
-            FocusFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor:Show()
         end
 
         local function ColorFrameName()
             if UnitIsPlayer("target") then
                 local c = RAID_CLASS_COLORS[select(2, UnitClass("target"))]
                 TargetFrame.TargetFrameContent.TargetFrameContentMain.Name:SetVertexColor(c.r, c.g, c.b)
-                TargetFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor:Hide()
             else
                 CleanupTarget()
             end
             if UnitIsPlayer("focus") then
                 local c = RAID_CLASS_COLORS[select(2, UnitClass("focus"))]
                 FocusFrame.TargetFrameContent.TargetFrameContentMain.Name:SetVertexColor(c.r, c.g, c.b)
-                FocusFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor:Hide()
             else
                 CleanupFocus()
             end
@@ -704,11 +700,11 @@ local function InitializeSettings()
         end
 
         local function GetValue()
-            return addon.database.TargetFocusReputationClassColor or defaultValue
+            return addon.database.TargetFocusNameClassColor or defaultValue
         end
 
         local function SetValue(value)
-            addon.database.TargetFocusReputationClassColor = value
+            addon.database.TargetFocusNameClassColor = value
             if value then
                 RegisterEvents()
                 ColorFrameName()
@@ -723,6 +719,76 @@ local function InitializeSettings()
         Settings.CreateCheckbox(unitFramesCategory, setting, tooltip)
         SetValue(GetValue())
     end
+
+    do
+        local name = "Hide Reputation Color"
+        local variable = "HideTargetFocusReputationColor"
+        local defaultValue = false
+        local tooltip = "Hides the ReputationColor frame for any target and focus unit that is a Player."
+
+        local function CleanupTarget()
+            TargetFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor:Show()
+        end
+
+        local function CleanupFocus()
+            FocusFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor:Show()
+        end
+
+        local function ColorFrameName()
+            if UnitIsPlayer("target") then
+                TargetFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor:Hide()
+            else
+                CleanupTarget()
+            end
+            if UnitIsPlayer("focus") then
+                FocusFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor:Hide()
+            else
+                CleanupFocus()
+            end
+        end
+
+        local function RegisterEvents()
+            local EmptyReputationColorFrame = addon.session.EmptyReputationColorFrame
+            if not EmptyReputationColorFrame then
+                EmptyReputationColorFrame = CreateFrame("FRAME")
+                EmptyReputationColorFrame:SetScript("OnEvent", ColorFrameName)
+            end
+            EmptyReputationColorFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
+            EmptyReputationColorFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
+            EmptyReputationColorFrame:RegisterEvent("PLAYER_FOCUS_CHANGED")
+            EmptyReputationColorFrame:RegisterEvent("UNIT_FACTION")
+            addon.session.EmptyReputationColorFrame = EmptyReputationColorFrame
+        end
+
+        local function UnregisterEvents()
+            local EmptyReputationColorFrame = addon.session.EmptyReputationColorFrame
+            if not EmptyReputationColorFrame then return end
+            EmptyReputationColorFrame:UnregisterAllEvents()
+            CleanupTarget()
+            CleanupFocus()
+        end
+
+        local function GetValue()
+            return addon.database.HideTargetFocusReputationColor or defaultValue
+        end
+
+        local function SetValue(value)
+            addon.database.HideTargetFocusReputationColor = value
+            if value then
+                RegisterEvents()
+                ColorFrameName()
+            else
+                UnregisterEvents()
+					      TargetFrame.CheckFaction(TargetFrame)
+					      TargetFrame.CheckFaction(FocusFrame)
+            end
+        end
+
+        local setting = Settings.RegisterProxySetting(unitFramesCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
+        Settings.CreateCheckbox(unitFramesCategory, setting, tooltip)
+        SetValue(GetValue())
+    end
+
 
     do
         local name = "Health bar class color"
