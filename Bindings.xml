@@ -8,4 +8,8 @@
     ReloadUI()
 	</Binding>
 
+	<Binding name="ITEM Hearthstone" category = "Lima UI"/>
+
+	<Binding name="MACRO Z_FOCUS" category = "Lima UI"/>
+
 </Bindings>

@@ -396,6 +396,22 @@ local function InitializeSettings()
         local bindingIndex = C_KeyBindings.GetBindingIndex(action)
         local initializer = CreateKeybindingEntryInitializer(bindingIndex, true)
         keyBindingsLayout:AddInitializer(initializer)
+
+        local action = "ITEM Hearthstone"
+        _G["BINDING_NAME_"..action] = "Hearthstone"
+        local bindingIndex = C_KeyBindings.GetBindingIndex(action)
+        local initializer = CreateKeybindingEntryInitializer(bindingIndex, true)
+        keyBindingsLayout:AddInitializer(initializer)
+
+        if not GetMacroInfo("Z_FOCUS") then
+            CreateMacro("Z_FOCUS", "INV_Misc_QuestionMark", "/focus [@mouseover,exists][]", false)
+        end
+
+        local action = "MACRO Z_FOCUS"
+        _G["BINDING_NAME_"..action] = "Focus Mouseover"
+        local bindingIndex = C_KeyBindings.GetBindingIndex(action)
+        local initializer = CreateKeybindingEntryInitializer(bindingIndex, true)
+        keyBindingsLayout:AddInitializer(initializer)
     end
 end
 
