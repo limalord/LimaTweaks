@@ -69,7 +69,7 @@ local function InitializeSettings()
         local defaultValue = 1
         local minValue = 0.65
         local maxValue = 1.15
-        local step = 0.05
+        local step = 0.01
         local tooltip = "Adjust the Game Menu size to a more comfortable level."
 
         local function GetValue()
@@ -96,7 +96,7 @@ local function InitializeSettings()
         local defaultValue = 1
         local minValue = 0.65
         local maxValue = 1.15
-        local step = 0.05
+        local step = 0.01
         local tooltip = "Adjust the Character Frame tabs size to a more comfortable level."
 
         local function GetValue()
@@ -123,7 +123,7 @@ local function InitializeSettings()
         local defaultValue = 1
         local minValue = 0.65
         local maxValue = 1.15
-        local step = 0.05
+        local step = 0.01
         local tooltip = "Adjust the Status Track Bar size to a more comfortable level."
 
         local function GetValue()
@@ -150,7 +150,7 @@ local function InitializeSettings()
         local defaultValue = 1
         local minValue = 0.65
         local maxValue = 1.15
-        local step = 0.05
+        local step = 0.01
         local tooltip = "Adjust the Secondary Status Track Bar size to a more comfortable level."
 
         local function GetValue()
