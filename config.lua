@@ -568,12 +568,14 @@ local function InitializeSettings()
         end
 
         local function SetValue(value)
+            -- set scale
             PlayerFrame.PlayerFrameContent.PlayerFrameContentMain.LevelBackgroundCircle:SetScale(value)
             TargetFrame.TargetFrameContent.TargetFrameContentMain.LevelBackgroundCircle:SetScale(value)
             FocusFrame.TargetFrameContent.TargetFrameContentMain.LevelBackgroundCircle:SetScale(value)
             PlayerLevelText:SetScale(value)
             TargetFrame.TargetFrameContent.TargetFrameContentMain.LevelText:SetScale(value)
             FocusFrame.TargetFrameContent.TargetFrameContentMain.LevelText:SetScale(value)
+            -- center text
             PlayerLevelText:SetPoint("CENTER", PlayerFrame.PlayerFrameContent.PlayerFrameContentMain.LevelBackgroundCircle, "CENTER", 0, 0)
             TargetFrame.TargetFrameContent.TargetFrameContentMain.LevelText:SetPoint("CENTER", TargetFrame.TargetFrameContent.TargetFrameContentMain.LevelBackgroundCircle, "CENTER", 0, 0)
             FocusFrame.TargetFrameContent.TargetFrameContentMain.LevelText:SetPoint("CENTER", FocusFrame.TargetFrameContent.TargetFrameContentMain.LevelBackgroundCircle, "CENTER", 0, 0)
@@ -596,40 +598,22 @@ local function InitializeSettings()
 
 	  unitFramesLayout:AddInitializer(CreateSettingsListSectionHeaderInitializer("Player"));
     do
-        local name = "Name bar class color"
-        local variable = "PlayerReputationClassColor"
+        local name = "Name class color"
+        local variable = "PlayerNameClassColor"
         local defaultValue = false
-        local tooltip = "Adds class color to the Player name bar."
+        local tooltip = "Adds class color to the Player name text."
 
         local function GetValue()
-            return addon.database.PlayerReputationClassColor or defaultValue
+            return addon.database.PlayerNameClassColor or defaultValue
         end
 
         local function SetValue(value)
-            addon.database.PlayerReputationClassColor = value
-            frame = addon.session.PlayerReputationClassColorFrame
-
-            if frame then
-                if value then
-                    frame:Show()
-                else
-                    frame:Hide()
-                end
-
-                return
-            end
-
             if value then
-                local PlayerFrame = PlayerFrame.PlayerFrameContent.PlayerFrameContentMain:CreateTexture(
-                    nil, "BACKGROUND"
-                )
-                PlayerFrame:SetAtlas("UI-HUD-UnitFrame-Target-PortraitOn-Type", true)
-                PlayerFrame:SetTexCoord(1, 0, 0, 1)
-                PlayerFrame:ClearAllPoints()
-                PlayerFrame:SetPoint("TOPLEFT", 75, -28)
-                PlayerFrame:SetVertexColor(addon.session.PlayerColor.r, addon.session.PlayerColor.g, addon.session.PlayerColor.b)
-                addon.session.PlayerReputationClassColorFrame = PlayerFrame
+                PlayerName:SetVertexColor(addon.session.PlayerColor.r, addon.session.PlayerColor.g, addon.session.PlayerColor.b)
+            else
+                PlayerName:SetVertexColor(1, 0.82352942228317, 0)
             end
+            addon.database.PlayerNameClassColor = value
         end
 
         local setting = Settings.RegisterProxySetting(unitFramesCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
@@ -666,50 +650,68 @@ local function InitializeSettings()
 
     unitFramesLayout:AddInitializer(CreateSettingsListSectionHeaderInitializer("Target and Focus"))
     do
-        local name = "Name bar class color"
-        local variable = "TargetFocusReputationBarClassColor"
+        local name = "Name class color"
+        local variable = "TargetFocusReputationClassColor"
         local defaultValue = false
-        local tooltip = "Adds class color to the Target and Focus name bar."
+        local tooltip = "Adds class color to the Target and Focus name text."
 
-        local function ColorFrameReputationBar()
+        local function CleanupTarget()
+            TargetFrame.TargetFrameContent.TargetFrameContentMain.Name:SetVertexColor(1, 0.82352942228317, 0)
+            TargetFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor:Show()
+        end
+
+        local function CleanupFocus()
+            FocusFrame.TargetFrameContent.TargetFrameContentMain.Name:SetVertexColor(1, 0.82352942228317, 0)
+            FocusFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor:Show()
+        end
+
+        local function ColorFrameName()
             if UnitIsPlayer("target") then
                 local c = RAID_CLASS_COLORS[select(2, UnitClass("target"))]
-                TargetFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor:SetVertexColor(c.r, c.g, c.b)
+                TargetFrame.TargetFrameContent.TargetFrameContentMain.Name:SetVertexColor(c.r, c.g, c.b)
+                TargetFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor:Hide()
+            else
+                CleanupTarget()
             end
             if UnitIsPlayer("focus") then
                 local c = RAID_CLASS_COLORS[select(2, UnitClass("focus"))]
-                FocusFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor:SetVertexColor(c.r, c.g, c.b)
+                FocusFrame.TargetFrameContent.TargetFrameContentMain.Name:SetVertexColor(c.r, c.g, c.b)
+                FocusFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor:Hide()
+            else
+                CleanupFocus()
             end
         end
 
         local function RegisterEvents()
-            local EmptyNameBarColorFrame = addon.session.EmptyNameBarColorFrame
-            if not EmptyNameBarColorFrame then
-                EmptyNameBarColorFrame = CreateFrame("FRAME")
-                EmptyNameBarColorFrame:SetScript("OnEvent", ColorFrameReputationBar)
+            local EmptyNameColorFrame = addon.session.EmptyNameColorFrame
+            if not EmptyNameColorFrame then
+                EmptyNameColorFrame = CreateFrame("FRAME")
+                EmptyNameColorFrame:SetScript("OnEvent", ColorFrameName)
             end
-            EmptyNameBarColorFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
-            EmptyNameBarColorFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
-            EmptyNameBarColorFrame:RegisterEvent("PLAYER_FOCUS_CHANGED")
-            EmptyNameBarColorFrame:RegisterEvent("UNIT_FACTION")
-            addon.session.EmptyNameBarColorFrame = EmptyNameBarColorFrame
+            EmptyNameColorFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
+            EmptyNameColorFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
+            EmptyNameColorFrame:RegisterEvent("PLAYER_FOCUS_CHANGED")
+            EmptyNameColorFrame:RegisterEvent("UNIT_FACTION")
+            addon.session.EmptyNameColorFrame = EmptyNameColorFrame
         end
 
         local function UnregisterEvents()
-            local EmptyNameBarColorFrame = addon.session.EmptyNameBarColorFrame
-            if not EmptyNameBarColorFrame then return end
-            EmptyNameBarColorFrame:UnregisterAllEvents()
+            local EmptyNameColorFrame = addon.session.EmptyNameColorFrame
+            if not EmptyNameColorFrame then return end
+            EmptyNameColorFrame:UnregisterAllEvents()
+            CleanupTarget()
+            CleanupFocus()
         end
 
         local function GetValue()
-            return addon.database.TargetFocusReputationBarClassColor or defaultValue
+            return addon.database.TargetFocusReputationClassColor or defaultValue
         end
 
         local function SetValue(value)
-            addon.database.TargetFocusReputationBarClassColor = value
+            addon.database.TargetFocusReputationClassColor = value
             if value then
                 RegisterEvents()
-                ColorFrameReputationBar()
+                ColorFrameName()
             else
                 UnregisterEvents()
 					      TargetFrame.CheckFaction(TargetFrame)
