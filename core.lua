@@ -1,12 +1,5 @@
 local addonName, addon = ...
 
----------------------
--- Hide Player Frame Corner
----------------------
-local function ApplyFrameCornerHide(frame)
-    PlayerFrame.PlayerFrameContent.PlayerFrameContentContextual.PlayerPortraitCornerIcon:SetParent(frame)
-end
-
 local function EventHandler(self, event, arg1, arg2, arg3, ...)
     if event == "PLAYER_LOGIN" then
         if not LimaUIDB then LimaUIDB = {} end
