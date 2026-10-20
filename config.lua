@@ -8,22 +8,86 @@ local function InitializeSettings()
     Settings.RegisterAddOnCategory(mainCategory)
 
     do
-        local name = "Hide Bag Bar art"
-        local variable = "HideBagBarArt"
+        local name = "Hide Keybindings"
+        local variable = "HideKeybindingsText"
         local defaultValue = false
-        local tooltip = "Hides Bag Bar border art."
+        local tooltip = "Hides Action Bar Keybindings text."
 
         local function GetValue()
-            return addon.database.HideBagBarArt or defaultValue
+            return addon.database.HideKeybindingsText or defaultValue
+        end
+
+        local function SetValue(value)
+            local alpha = value and 0 or 1
+			      for i = 1, 12 do
+				        _G["ActionButton"..i.."HotKey"]:SetAlpha(alpha)
+				        _G["MultiBarBottomRightButton"..i.."HotKey"]:SetAlpha(alpha)
+				        _G["MultiBarBottomLeftButton"..i.."HotKey"]:SetAlpha(alpha)
+				        _G["MultiBarRightButton"..i.."HotKey"]:SetAlpha(alpha)
+				        _G["MultiBarLeftButton"..i.."HotKey"]:SetAlpha(alpha)
+				        _G["MultiBar5Button" .. i .. "HotKey"]:SetAlpha(alpha)
+				        _G["MultiBar6Button" .. i .. "HotKey"]:SetAlpha(alpha)
+				        _G["MultiBar7Button" .. i .. "HotKey"]:SetAlpha(alpha)
+			      end
+            addon.database.HideKeybindingsText = value
+        end
+
+        local setting = Settings.RegisterProxySetting(mainCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
+        Settings.CreateCheckbox(mainCategory, setting, tooltip)
+
+        SetValue(GetValue())
+    end
+
+    do
+        local name = "Hide Macro Names"
+        local variable = "HideMacroText"
+        local defaultValue = false
+        local tooltip = "Hides Action Bar Macro names."
+
+        local function GetValue()
+            return addon.database.HideMacroText or defaultValue
+        end
+
+        local function SetValue(value)
+            local alpha = value and 0 or 1
+			      for i = 1, 12 do
+				        _G["ActionButton"..i.."Name"]:SetAlpha(alpha)
+				        _G["MultiBarBottomRightButton"..i.."Name"]:SetAlpha(alpha)
+				        _G["MultiBarBottomLeftButton"..i.."Name"]:SetAlpha(alpha)
+				        _G["MultiBarRightButton"..i.."Name"]:SetAlpha(alpha)
+				        _G["MultiBarLeftButton"..i.."Name"]:SetAlpha(alpha)
+				        _G["MultiBar5Button" .. i .. "Name"]:SetAlpha(alpha)
+				        _G["MultiBar6Button" .. i .. "Name"]:SetAlpha(alpha)
+				        _G["MultiBar7Button" .. i .. "Name"]:SetAlpha(alpha)
+			      end
+            addon.database.HideMacroText = value
+        end
+
+        local setting = Settings.RegisterProxySetting(mainCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
+        Settings.CreateCheckbox(mainCategory, setting, tooltip)
+
+        SetValue(GetValue())
+    end
+
+    do
+        local name = "Hide Portrait Hit Indicators"
+        local variable = "HidePortraitHitIndicator"
+        local defaultValue = false
+        local tooltip = "Hides Portrait hit indicators spam."
+
+        local function GetValue()
+            return addon.database.HidePortraitHitIndicator or defaultValue
         end
 
         local function SetValue(value)
             if value then
-                BagsBar.BorderArt:Hide()
+			          PlayerFrame.PlayerFrameContent.PlayerFrameContentMain.HitIndicator:Hide()
+			          hooksecurefunc(PetHitIndicator, "Show", PetHitIndicator.Hide)
             else
-                BagsBar.BorderArt:Show()
+			          PlayerFrame.PlayerFrameContent.PlayerFrameContentMain.HitIndicator:Show()
+			          hooksecurefunc(PetHitIndicator, "Show", PetHitIndicator.Show)
             end
-            addon.database.HideBagBarArt = value
+            addon.database.HidePortraitHitIndicator = value
         end
 
         local setting = Settings.RegisterProxySetting(mainCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
@@ -51,6 +115,31 @@ local function InitializeSettings()
                 MicroMenu.BorderArt:Show()
             end
             addon.database.HideMicroMenuArt = value
+        end
+
+        local setting = Settings.RegisterProxySetting(mainCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
+        Settings.CreateCheckbox(mainCategory, setting, tooltip)
+
+        SetValue(GetValue())
+    end
+
+    do
+        local name = "Hide Bag Bar art"
+        local variable = "HideBagBarArt"
+        local defaultValue = false
+        local tooltip = "Hides Bag Bar border art."
+
+        local function GetValue()
+            return addon.database.HideBagBarArt or defaultValue
+        end
+
+        local function SetValue(value)
+            if value then
+                BagsBar.BorderArt:Hide()
+            else
+                BagsBar.BorderArt:Show()
+            end
+            addon.database.HideBagBarArt = value
         end
 
         local setting = Settings.RegisterProxySetting(mainCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
@@ -663,7 +752,7 @@ local function InitializeSettings()
         end
 
         local setting = Settings.RegisterProxySetting(automationCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
-        Settings.CreateCheckbox(mainCategory, setting, tooltip)
+        Settings.CreateCheckbox(automationCategory, setting, tooltip)
 
         SetValue(GetValue())
     end
