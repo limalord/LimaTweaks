@@ -91,6 +91,33 @@ local function InitializeSettings()
     end
 
     do
+        local name = "World Map Frame scale"
+        local variable = "WorldMapFrameScale"
+        local defaultValue = 1
+        local minValue = 0.5
+        local maxValue = 1.5
+        local step = 0.01
+        local tooltip = "Adjust the World Map size to a more comfortable level."
+
+        local function GetValue()
+            return addon.database.WorldMapFrameScale or defaultValue
+        end
+
+        local function SetValue(value)
+            WorldMapFrame:SetScale(value)
+            addon.database.WorldMapFrameScale = value
+        end
+
+        local setting = Settings.RegisterProxySetting(mainCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
+
+        local options = Settings.CreateSliderOptions(minValue, maxValue, step)
+        options:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right, FormatPercentageRounded)
+        Settings.CreateSlider(uiScaleCategory, setting, options, tooltip)
+
+        SetValue(GetValue())
+    end
+
+    do
         local name = "Character Frame tabs scale"
         local variable = "CharacterFrameTabScale"
         local defaultValue = 1
