@@ -560,7 +560,7 @@ local function InitializeSettings()
                 PlayerFrame:SetAtlas("UI-HUD-UnitFrame-Target-PortraitOn-Type", true)
                 PlayerFrame:SetTexCoord(1, 0, 0, 1)
                 PlayerFrame:ClearAllPoints()
-                PlayerFrame:SetPoint("TOPLEFT", 75, -25)
+                PlayerFrame:SetPoint("TOPLEFT", 75, -28)
                 PlayerFrame:SetVertexColor(addon.session.PlayerColor.r, addon.session.PlayerColor.g, addon.session.PlayerColor.b)
                 addon.session.PlayerReputationClassColorFrame = PlayerFrame
             end
