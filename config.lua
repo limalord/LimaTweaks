@@ -214,6 +214,64 @@ local function InitializeSettings()
     end
 
     do
+        local name = "Collections Pane"
+        local variable = "CollectionsJournalScale"
+        local defaultValue = 1
+        local minValue = 0.5
+        local maxValue = 1.5
+        local step = 0.01
+        local tooltip = "Adjust the Collections Pane size to a more comfortable level."
+
+        local function GetValue()
+            return addon.database.CollectionsJournalScale or defaultValue
+        end
+
+        local function SetValue(value)
+	          if not CollectionsJournal then
+		            CollectionsJournal_LoadUI()
+	          end
+            CollectionsJournal:HookScript("OnShow", function(self)
+                CollectionsJournal:SetScale(value)
+            end)
+            addon.database.CollectionsJournalScale = value
+        end
+
+        local setting = Settings.RegisterProxySetting(mainCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
+
+        local options = Settings.CreateSliderOptions(minValue, maxValue, step)
+        options:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right, FormatPercentageRounded)
+        Settings.CreateSlider(uiScaleCategory, setting, options, tooltip)
+
+        SetValue(GetValue())
+    end
+
+    do
+        local name = "Looking For Group"
+        local variable = "LFGParentFrameScale"
+        local defaultValue = 1
+        local minValue = 0.5
+        local maxValue = 1.5
+        local step = 0.01
+        local tooltip = "Adjust the Looking For Group pane size to a more comfortable level."
+    
+        local function GetValue()
+            return addon.database.LFGParentFrameScale or defaultValue
+        end
+    
+        local function SetValue(value)
+            LFGParentFrame:SetScale(value)
+            addon.database.LFGParentFrameScale = value
+        end
+    
+        local setting = Settings.RegisterProxySetting(mainCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
+    
+        local options = Settings.CreateSliderOptions(minValue, maxValue, step)
+        options:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right, FormatPercentageRounded)
+        Settings.CreateSlider(uiScaleCategory, setting, options, tooltip)
+        addon.database.LFGParentFrameScale = GetValue()
+    end
+
+    do
         local name = "Character Pane"
         local variable = "CharacterFrameScale"
         local defaultValue = 1
@@ -570,4 +628,9 @@ local function InitializeSettings()
     end
 end
 
+local function LFGSettings()
+    LFGParentFrame:SetScale(addon.database.LFGParentFrameScale)
+end
+
 addon.InitializeSettings = InitializeSettings
+addon.LFGSettings = LFGSettings
