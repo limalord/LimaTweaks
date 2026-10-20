@@ -255,42 +255,31 @@ local function InitializeSettings()
         local function ColorFrameReputationBar()
             if UnitIsPlayer("target") then
                 local c = RAID_CLASS_COLORS[select(2, UnitClass("target"))]
-                if c then TargetFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor:SetVertexColor(c.r, c.g, c.b) end
+                TargetFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor:SetVertexColor(c.r, c.g, c.b)
             end
             if UnitIsPlayer("focus") then
                 local c = RAID_CLASS_COLORS[select(2, UnitClass("focus"))]
-                if c then FocusFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor:SetVertexColor(c.r, c.g, c.b) end
-            end
-        end
-
-        local function UncolorFrameReputationBar()
-            if UnitIsPlayer("target") then
-                local c = RAID_CLASS_COLORS[select(2, UnitClass("target"))]
-                if c then TargetFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor:SetVertexColor(0, 1, 0, 1) end
-            end
-            if UnitIsPlayer("focus") then
-                local c = RAID_CLASS_COLORS[select(2, UnitClass("focus"))]
-                if c then FocusFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor:SetVertexColor(0, 1, 0, 1) end
+                FocusFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor:SetVertexColor(c.r, c.g, c.b)
             end
         end
 
         local function RegisterEvents()
-            local EmptyColorFrame = addon.session.EmptyColorFrame
-            if not EmptyColorFrame then
-                EmptyColorFrame = CreateFrame("FRAME")
-                EmptyColorFrame:SetScript("OnEvent", ColorFrameReputationBar)
+            local EmptyNameBarColorFrame = addon.session.EmptyNameBarColorFrame
+            if not EmptyNameBarColorFrame then
+                EmptyNameBarColorFrame = CreateFrame("FRAME")
+                EmptyNameBarColorFrame:SetScript("OnEvent", ColorFrameReputationBar)
             end
-            EmptyColorFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
-            EmptyColorFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
-            EmptyColorFrame:RegisterEvent("PLAYER_FOCUS_CHANGED")
-            EmptyColorFrame:RegisterEvent("UNIT_FACTION")
-            addon.session.EmptyColorFrame = EmptyColorFrame
+            EmptyNameBarColorFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
+            EmptyNameBarColorFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
+            EmptyNameBarColorFrame:RegisterEvent("PLAYER_FOCUS_CHANGED")
+            EmptyNameBarColorFrame:RegisterEvent("UNIT_FACTION")
+            addon.session.EmptyNameBarColorFrame = EmptyNameBarColorFrame
         end
 
         local function UnregisterEvents()
-            local EmptyColorFrame = addon.session.EmptyColorFrame
-            if not EmptyColorFrame then return end
-            EmptyColorFrame:UnregisterAllEvents()
+            local EmptyNameBarColorFrame = addon.session.EmptyNameBarColorFrame
+            if not EmptyNameBarColorFrame then return end
+            EmptyNameBarColorFrame:UnregisterAllEvents()
         end
     
         local function GetValue()
@@ -304,81 +293,92 @@ local function InitializeSettings()
                 ColorFrameReputationBar()
             else
                 UnregisterEvents()
-                UncolorFrameReputationBar()
+					      TargetFrame.CheckFaction(TargetFrame)
+					      TargetFrame.CheckFaction(FocusFrame)
             end
         end
 
         local setting = Settings.RegisterProxySetting(unitFramesCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
         Settings.CreateCheckbox(unitFramesCategory, setting, tooltip)
         SetValue(GetValue())
-
     end
 
-    -- do
-    --     local name = "Health bar class color"
-    --     local variable = "TargetFocusHealthBarClassColor"
-    --     local defaultValue = false
-    --     local tooltip = "Adds class color to the Target and Focus health bar."
-    -- 
-    --     local function ColorFrameHealthBar()
-    --         if UnitIsPlayer("target") then
-    --             local c = RAID_CLASS_COLORS[select(2, UnitClass("target"))]
-    --             if c then TargetFrame.TargetFrameContent.TargetFrameContentMain.HealthColor:SetVertexColor(c.r, c.g, c.b) end
-    --         local PlayerHealthBarFrame = PlayerFrame.PlayerFrameContent.PlayerFrameContentMain.HealthBarsContainer.HealthBar
-    --             PlayerHealthBarFrame:SetStatusBarDesaturated(true)
-    --             PlayerHealthBarFrame:SetStatusBarColor(addon.session.PlayerColor.r, addon.session.PlayerColor.g, addon.session.PlayerColor.b)
-    --         end
-    --         if UnitIsPlayer("focus") then
-    --             local c = RAID_CLASS_COLORS[select(2, UnitClass("focus"))]
-    --             if c then FocusFrame.TargetFrameContent.TargetFrameContentMain.HealthColor:SetVertexColor(c.r, c.g, c.b) end
-    --         end
-    --     end
-    -- 
-    --     local function UncolorFrameHealthBar()
-    --         if UnitIsPlayer("target") then
-    --             local c = RAID_CLASS_COLORS[select(2, UnitClass("target"))]
-    --             if c then TargetFrame.TargetFrameContent.TargetFrameContentMain.HealthColor:SetVertexColor(0, 1, 0, 1) end
-    --         end
-    --         if UnitIsPlayer("focus") then
-    --             local c = RAID_CLASS_COLORS[select(2, UnitClass("focus"))]
-    --             if c then FocusFrame.TargetFrameContent.TargetFrameContentMain.HealthColor:SetVertexColor(0, 1, 0, 1) end
-    --         end
-    --     end
-    -- 
-    --     local function RegisterEvents()
-    --         local EmptyColorFrame = CreateFrame("FRAME")
-    --         EmptyColorFrame:SetScript("OnEvent", ColorFrameHealthBar)
-    --         EmptyColorFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
-    --         EmptyColorFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
-    --         EmptyColorFrame:RegisterEvent("PLAYER_FOCUS_CHANGED")
-    --         EmptyColorFrame:RegisterEvent("UNIT_FACTION")
-    --         addon.session.EmptyColorFrame = EmptyColorFrame
-    --     end
-    -- 
-    --     local function GetValue()
-    --         return addon.database.TargetFocusHealthBarClassColor or defaultValue
-    --     end
-    -- 
-    --     local function SetValue(value)
-    --         addon.database.TargetFocusHealthBarClassColor = value
-    --         if addon.session.EmptyColorFrame then
-    --             if not value then
-    --                 addon.session.EmptyColorFrame:UnregisterAllEvents()
-    --                 UncolorFrameHealthBar()
-    --             end
-    --             return
-    --         end
-    --         if value then
-    --             RegisterEvents()
-    --             ColorFrameHealthBar()
-    --         end
-    --     end
-    -- 
-    --     local setting = Settings.RegisterProxySetting(unitFramesCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
-    --     Settings.CreateCheckbox(unitFramesCategory, setting, tooltip)
-    --     SetValue(GetValue())
-    -- 
-    -- end
+    do
+        local name = "Health bar class color"
+        local variable = "TargetFocusHealthBarClassColor"
+        local defaultValue = false
+        local tooltip = "Adds class color to the Target and Focus name bar."
+
+        local function ColorHealthBar()
+            local TargetHealthBarFrame = TargetFrame.TargetFrameContent.TargetFrameContentMain.HealthBarsContainer.HealthBar
+            if UnitIsPlayer("target") then
+                local c = RAID_CLASS_COLORS[select(2, UnitClass("target"))]
+                TargetHealthBarFrame:SetStatusBarDesaturated(true)
+                TargetHealthBarFrame:SetStatusBarColor(c.r, c.g, c.b)
+            else
+                TargetHealthBarFrame:SetStatusBarDesaturated(false)
+                TargetHealthBarFrame:SetStatusBarColor(0, 1, 0, 1)
+            end
+
+            local FocusHealthBarFrame = FocusFrame.TargetFrameContent.TargetFrameContentMain.HealthBarsContainer.HealthBar
+            if UnitIsPlayer("focus") then
+                local c = RAID_CLASS_COLORS[select(2, UnitClass("focus"))]
+                FocusHealthBarFrame:SetStatusBarDesaturated(true)
+                FocusHealthBarFrame:SetStatusBarColor(c.r, c.g, c.b)
+            else
+                FocusHealthBarFrame:SetStatusBarDesaturated(false)
+                FocusHealthBarFrame:SetStatusBarColor(0, 1, 0, 1)
+            end
+        end
+
+        local function UncolorHealthBar()
+            if not addon.session.EmptyHealthBarColorFrame then return end
+            local TargetHealthBarFrame = TargetFrame.TargetFrameContent.TargetFrameContentMain.HealthBarsContainer.HealthBar
+            TargetHealthBarFrame:SetStatusBarDesaturated(false)
+            TargetHealthBarFrame:SetStatusBarColor(0, 1, 0, 1)
+            local FocusHealthBarFrame = FocusFrame.TargetFrameContent.TargetFrameContentMain.HealthBarsContainer.HealthBar
+            FocusHealthBarFrame:SetStatusBarDesaturated(false)
+            FocusHealthBarFrame:SetStatusBarColor(0, 1, 0, 1)
+        end
+
+        local function RegisterEvents()
+            local EmptyHealthBarColorFrame = addon.session.EmptyHealthBarColorFrame
+            if not EmptyHealthBarColorFrame then
+                EmptyHealthBarColorFrame = CreateFrame("FRAME")
+                EmptyHealthBarColorFrame:SetScript("OnEvent", ColorHealthBar)
+            end
+            EmptyHealthBarColorFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
+            EmptyHealthBarColorFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
+            EmptyHealthBarColorFrame:RegisterEvent("PLAYER_FOCUS_CHANGED")
+            EmptyHealthBarColorFrame:RegisterEvent("UNIT_FACTION")
+            addon.session.EmptyHealthBarColorFrame = EmptyHealthBarColorFrame
+        end
+
+        local function UnregisterEvents()
+            local EmptyHealthBarColorFrame = addon.session.EmptyHealthBarColorFrame
+            if not EmptyHealthBarColorFrame then return end
+            EmptyHealthBarColorFrame:UnregisterAllEvents()
+        end
+    
+        local function GetValue()
+            return addon.database.TargetFocusHealthBarClassColor or defaultValue
+        end
+
+        local function SetValue(value)
+            addon.database.TargetFocusHealthBarClassColor = value
+            if value then
+                RegisterEvents()
+                ColorHealthBar()
+            else
+                UnregisterEvents()
+                UncolorHealthBar()
+            end
+        end
+
+        local setting = Settings.RegisterProxySetting(unitFramesCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
+        Settings.CreateCheckbox(unitFramesCategory, setting, tooltip)
+        SetValue(GetValue())
+    end
 end
 
 addon.InitializeSettings = InitializeSettings
