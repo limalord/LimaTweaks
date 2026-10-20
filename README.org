@@ -25,3 +25,7 @@ Toggles for "Auto Repair" and "Fast Loot".
 ** Variables
 
 Sliders and checkboxes for CVars that the game's Options doesn't expose.
+
+** Human Made
+
+Human-Made work by limalord. No AI/LLM use in any part.
