@@ -14,6 +14,7 @@ local function EventHandler(self, event, arg1, arg2, arg3, ...)
         addon.session = {}
         addon.session.PlayerColor = RAID_CLASS_COLORS[select(2, UnitClass("player"))]
         addon.InitializeSettings()
+        addon.SlashCmd.Initialize()
     end
 end
 

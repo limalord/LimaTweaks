@@ -6,5 +6,6 @@
 ## IconTexture: Interface\ICONS\Ability_warrior_charge
 ## SavedVariables: LimaUIDB
 
-core.lua
+slashcmd.lua
 config.lua
+core.lua

@@ -4,6 +4,7 @@ local function InitializeSettings()
     -- Main LimaUI category
     local mainCategory, _ = Settings.RegisterVerticalLayoutCategory(addonName)
     addon.settingsCategory = mainCategory
+    addon.settingsCategoryID = mainCategory:GetID()
     Settings.RegisterAddOnCategory(mainCategory)
 
     do
