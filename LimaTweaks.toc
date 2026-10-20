@@ -1,6 +1,6 @@
 ## Interface: 16001
 ## Title: |cFF69CCF0LimaTweaks|r
-## Version: 2
+## Version: 3
 ## Notes: Extends original Options, minimal tweaks, and quality of life changes.
 ## Author: limalord
 ## IconTexture: Interface\ICONS\Ability_warrior_charge

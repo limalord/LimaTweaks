@@ -854,7 +854,7 @@ local function InitializeSettings()
         local initializer = CreateKeybindingEntryInitializer(bindingIndex, true)
         keyBindingsLayout:AddInitializer(initializer)
         if not GetMacroInfo("LIMA_TWEAKS_OUTFITS") then
-            CreateMacro("LIMA_TWEAKS_OUTFITS", 135056, "/luioutfits", false)
+            CreateMacro("LIMA_TWEAKS_OUTFITS", 135056, "/ltoutfits", false)
         end
 
         local action = "LIMA_TWEAKS_RELOAD"
