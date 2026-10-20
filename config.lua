@@ -7,6 +7,9 @@ local function InitializeSettings()
     addon.settingsCategoryID = mainCategory:GetID()
     Settings.RegisterAddOnCategory(mainCategory)
 
+    -- Minimalism
+    local minimalismCategory, _ = Settings.RegisterVerticalLayoutSubcategory(mainCategory, "Minimalism")
+    Settings.RegisterAddOnCategory(minimalismCategory)
     do
         local name = "Hide Keybindings"
         local variable = "HideKeybindingsText"
@@ -32,8 +35,8 @@ local function InitializeSettings()
             addon.database.HideKeybindingsText = value
         end
 
-        local setting = Settings.RegisterProxySetting(mainCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
-        Settings.CreateCheckbox(mainCategory, setting, tooltip)
+        local setting = Settings.RegisterProxySetting(minimalismCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
+        Settings.CreateCheckbox(minimalismCategory, setting, tooltip)
 
         SetValue(GetValue())
     end
@@ -63,8 +66,35 @@ local function InitializeSettings()
             addon.database.HideMacroText = value
         end
 
-        local setting = Settings.RegisterProxySetting(mainCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
-        Settings.CreateCheckbox(mainCategory, setting, tooltip)
+        local setting = Settings.RegisterProxySetting(minimalismCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
+        Settings.CreateCheckbox(minimalismCategory, setting, tooltip)
+
+        SetValue(GetValue())
+    end
+
+    do
+        local name = "Hide Stance Bar"
+        local variable = "HideStanceBar"
+        local defaultValue = false
+        local tooltip = "Hides the class Stance Bar."
+
+        local function GetValue()
+            return addon.database.HideStanceBar or defaultValue
+        end
+
+			  local EmptyStanceBar = CreateFrame("FRAME", nil, UIParent)
+        EmptyStanceBar:Hide()
+        local function SetValue(value)
+            if value then
+			          StanceBar:SetParent(EmptyStanceBar)
+            else
+			          StanceBar:SetParent(UIParent)
+            end
+            addon.database.HideStanceBar = value
+        end
+
+        local setting = Settings.RegisterProxySetting(minimalismCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
+        Settings.CreateCheckbox(minimalismCategory, setting, tooltip)
 
         SetValue(GetValue())
     end
@@ -90,8 +120,8 @@ local function InitializeSettings()
             addon.database.HidePortraitHitIndicator = value
         end
 
-        local setting = Settings.RegisterProxySetting(mainCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
-        Settings.CreateCheckbox(mainCategory, setting, tooltip)
+        local setting = Settings.RegisterProxySetting(minimalismCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
+        Settings.CreateCheckbox(minimalismCategory, setting, tooltip)
 
         SetValue(GetValue())
     end
@@ -117,8 +147,8 @@ local function InitializeSettings()
             addon.database.HideMicroMenuArt = value
         end
 
-        local setting = Settings.RegisterProxySetting(mainCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
-        Settings.CreateCheckbox(mainCategory, setting, tooltip)
+        local setting = Settings.RegisterProxySetting(minimalismCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
+        Settings.CreateCheckbox(minimalismCategory, setting, tooltip)
 
         SetValue(GetValue())
     end
@@ -142,8 +172,8 @@ local function InitializeSettings()
             addon.database.HideBagBarArt = value
         end
 
-        local setting = Settings.RegisterProxySetting(mainCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
-        Settings.CreateCheckbox(mainCategory, setting, tooltip)
+        local setting = Settings.RegisterProxySetting(minimalismCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
+        Settings.CreateCheckbox(minimalismCategory, setting, tooltip)
 
         SetValue(GetValue())
     end
@@ -799,6 +829,12 @@ local function InitializeSettings()
 
         SetValue(GetValue())
     end
+
+    -- Variables category
+    local variablesCategory, variablesLayout = Settings.RegisterVerticalLayoutSubcategory(mainCategory, "Variables")
+    Settings.RegisterAddOnCategory(variablesCategory)
+
+
 end
 
 local function LFGSettings()
