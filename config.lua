@@ -938,7 +938,7 @@ local function InitializeSettings()
             [2] = {
                 cvar = "rotateMinimap",
                 name = "Rotate Minimap",
-                varType = Settings.VarType.Number,
+                varType = Settings.VarType.Boolean,
                 format = Formatter,
                 min = 0, max = 1, step = 1,
                 tooltip = "Rotates minimap."
@@ -947,15 +947,15 @@ local function InitializeSettings()
                 cvar = "cameraDistanceMaxZoomFactor",
                 name = "Max Camera Distance",
                 varType = Settings.VarType.Number,
-                format = FormatPercentageRounded,
-                min = 1, max = 4, step = 0.1,
+                format = Formatter,
+                min = 1, max = 4, step = 1,
                 tooltip = "Set max camera zoom level."
             },
             [4] = { name = "Graphics: Image Quality", separator = true },
             [5] = {
                 cvar = "ResampleAlwaysSharpen",
                 name = "Resample Always Sharpen",
-                varType = Settings.VarType.Number,
+                varType = Settings.VarType.Boolean,
                 format = Formatter,
                 min = 0, max = 1, step = 1,
                 tooltip = "Forces always-on image sharpening. Also check Resample Quality and Resample Sharpness in the Graphics options."
@@ -1050,11 +1050,16 @@ local function InitializeSettings()
             else
                 getValue, setValue, getDefaultValue = Settings.CreateCVarAccessorClosures(info.cvar, info.varType)
                 defaultValue = getDefaultValue()
-                tooltip = info.tooltip.." (Default: "..defaultValue..")"
+                tooltip = info.tooltip.." (Default: "..tostring(defaultValue)..")"
 		            local setting = Settings.RegisterProxySetting(variablesCategory, info.name, type(defaultValue), info.name, defaultValue, getValue, setValue);
-                local options = Settings.CreateSliderOptions(info.min, info.max, info.step)
-                options:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right, info.format)
-                Settings.CreateSlider(variablesCategory, setting, options, tooltip)
+                local options
+                if info.varType == Settings.VarType.Boolean then
+                    Settings.CreateCheckbox(variablesCategory, setting, tooltip)
+                else
+                    local options = Settings.CreateSliderOptions(info.min, info.max, info.step)
+                    options:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right, info.format)
+                    Settings.CreateSlider(variablesCategory, setting, options, tooltip)
+                end
             end
         end
     end
