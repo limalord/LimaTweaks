@@ -989,7 +989,7 @@ local function InitializeSettings()
                 name = "Object Culling Distance",
                 varType = Settings.VarType.Number,
                 format = FormatNumber,
-                min = 1, max = 200, step = 1,
+                min = 1, max = 120, step = 1,
                 tooltip = "Set Object Culling distance."
             },
             [13] = {
@@ -997,7 +997,7 @@ local function InitializeSettings()
                 name = "Object Culling Size",
                 varType = Settings.VarType.Number,
                 format = FormatNumber,
-                min = 1, max = 100, step = 1,
+                min = 1, max = 60, step = 1,
                 tooltip = "Set Object Culling size."
             },
             [14] = {
@@ -1005,7 +1005,7 @@ local function InitializeSettings()
                 name = "Object Fade Scale",
                 varType = Settings.VarType.Number,
                 format = FormatNumber,
-                min = 50, max = 400, step = 1,
+                min = 50, max = 200, step = 1,
                 tooltip = "Set Object Culling fade scale."
             },
             [15] = {
@@ -1021,7 +1021,7 @@ local function InitializeSettings()
                 name = "Object Size Scale",
                 varType = Settings.VarType.Number,
                 format = FormatNumber,
-                min = 1, max = 200, step = 1,
+                min = 1, max = 50, step = 1,
                 tooltip = "Set Object Culling size scale."
             },
         }
