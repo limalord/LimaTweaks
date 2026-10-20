@@ -3,6 +3,8 @@
 ## Version: 1
 ## Notes: Interface Tweaks
 ## Author: Limalord
-## IconTexture: Interface\ICONS\Ability_Rogue_KidneyShot
+## IconTexture: Interface\ICONS\Ability_warrior_charge
 ## SavedVariables: LimaUIDB
-LimaUI.lua
+
+core.lua
+config.lua

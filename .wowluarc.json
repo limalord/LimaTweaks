@@ -1,0 +1,4 @@
+{
+  "ignore": ["Libs/"],
+  "flavors": ["classic"]
+}

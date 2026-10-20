@@ -1,4 +1,5 @@
 -- global variables
+local addonName, addon = ...
 local LimaUIC = {}
 LimaUIC["RaidColors"] = RAID_CLASS_COLORS
 
