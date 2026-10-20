@@ -1,7 +1,5 @@
 #+title: LimaTweaks
 
-* About this addon
-
 Adds options panels for settings and variables that the game doesn't make available anymore, or never did in the first place. The goal behind the addon is to extend the original Options panel, provide minimal interface tweaks, and quality of life changes - all while preserving the original game look and feel as much as possible.
 
 ** Minimalism
