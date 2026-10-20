@@ -118,7 +118,7 @@ local function InitializeSettings()
     end
 
     do
-        local name = "Talents scale"
+        local name = "Talents pane"
         local variable = "PlayerSpellsFrameScale"
         local defaultValue = 1
         local minValue = 0.5
@@ -150,21 +150,21 @@ local function InitializeSettings()
     end
 
     do
-        local name = "Character tabs scale"
-        local variable = "CharacterFrameTabScale"
+        local name = "Character pane"
+        local variable = "CharacterFrameScale"
         local defaultValue = 1
         local minValue = 0.5
         local maxValue = 1.5
         local step = 0.01
-        local tooltip = "Adjust the Character tabs size to a more comfortable level."
+        local tooltip = "Adjust the Character pane size to a more comfortable level."
 
         local function GetValue()
-            return addon.database.CharacterFrameTabScale or defaultValue
+            return addon.database.CharacterFrameScale or defaultValue
         end
 
         local function SetValue(value)
-            CharacterFrameModeTabs:SetScale(value)
-            addon.database.CharacterFrameTabScale = value
+            CharacterFrame:SetScale(value)
+            addon.database.CharacterFrameScale = value
         end
 
         local setting = Settings.RegisterProxySetting(mainCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
@@ -177,7 +177,39 @@ local function InitializeSettings()
     end
 
     do
-        local name = "Status Track Bar scale"
+        local name = "Professions pane"
+        local variable = "ProfessionsFrameScale"
+        local defaultValue = 1
+        local minValue = 0.5
+        local maxValue = 1.5
+        local step = 0.01
+        local tooltip = "Adjust the Professions pane size to a more comfortable level."
+
+        local function GetValue()
+            return addon.database.ProfessionsFrameScale or defaultValue
+        end
+
+        local function SetValue(value)
+	          if not ProfessionsFrame then
+		            ProfessionsFrame_LoadUI()
+	          end
+            ProfessionsFrame:HookScript("OnShow", function(self)
+                ProfessionsFrame:SetScale(value)
+            end)
+            addon.database.ProfessionsFrameScale = value
+        end
+
+        local setting = Settings.RegisterProxySetting(mainCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
+
+        local options = Settings.CreateSliderOptions(minValue, maxValue, step)
+        options:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right, FormatPercentageRounded)
+        Settings.CreateSlider(uiScaleCategory, setting, options, tooltip)
+
+        SetValue(GetValue())
+    end
+
+    do
+        local name = "Status Bar"
         local variable = "StatusTrackBarScale"
         local defaultValue = 1
         local minValue = 0.5
@@ -204,7 +236,7 @@ local function InitializeSettings()
     end
 
     do
-        local name = "Secondary Status Track Bar scale"
+        local name = "Secondary Status Bar"
         local variable = "SecondaryStatusTrackBarScale"
         local defaultValue = 1
         local minValue = 0.5
