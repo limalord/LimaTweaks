@@ -112,10 +112,8 @@ local function InitializeSettings()
         local function SetValue(value)
             if value then
 			          PlayerFrame.PlayerFrameContent.PlayerFrameContentMain.HitIndicator:Hide()
-			          hooksecurefunc(PetHitIndicator, "Show", PetHitIndicator.Hide)
             else
 			          PlayerFrame.PlayerFrameContent.PlayerFrameContentMain.HitIndicator:Show()
-			          hooksecurefunc(PetHitIndicator, "Show", PetHitIndicator.Show)
             end
             addon.database.HidePortraitHitIndicator = value
         end
@@ -171,6 +169,28 @@ local function InitializeSettings()
             end
             addon.database.HideBagBarArt = value
         end
+
+        local setting = Settings.RegisterProxySetting(minimalismCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
+        Settings.CreateCheckbox(minimalismCategory, setting, tooltip)
+
+        SetValue(GetValue())
+    end
+
+    do
+        local name = "Hide Bag Bar"
+        local variable = "HideBagBar"
+        local defaultValue = false
+        local tooltip = "Hides Bag Bar."
+
+        local function GetValue()
+            return addon.database.HideBagBar or defaultValue
+        end
+
+        local function SetValue(value)
+            if value then BagsBar:Hide() else BagsBar:Show() end
+            addon.database.HideBagBar = value
+        end
+        addon.SetBagsVisibility = SetValue
 
         local setting = Settings.RegisterProxySetting(minimalismCategory, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
         Settings.CreateCheckbox(minimalismCategory, setting, tooltip)
@@ -891,9 +911,50 @@ local function InitializeSettings()
                 cvar = "cameraDistanceMaxZoomFactor",
                 name = "Max Camera Distance",
                 varType = Settings.VarType.Number,
-                format = FormatNumber,
+                format = FormatPercentageRounded,
                 min = 1, max = 4, step = 0.1,
                 tooltip = "Set max camera zoom level."
+            },
+            [11] = { name = "Object Culling", separator = true },
+            [12] = {
+                cvar = "lodObjectCullDist",
+                name = "Object Culling Distance",
+                varType = Settings.VarType.Number,
+                format = FormatNumber,
+                min = 1, max = 200, step = 1,
+                tooltip = "Set Object Culling distance."
+            },
+            [13] = {
+                cvar = "lodObjectCullSize",
+                name = "Object Culling Size",
+                varType = Settings.VarType.Number,
+                format = FormatNumber,
+                min = 1, max = 100, step = 1,
+                tooltip = "Set Object Culling size."
+            },
+            [14] = {
+                cvar = "lodObjectFadeScale",
+                name = "Object Fade Scale",
+                varType = Settings.VarType.Number,
+                format = FormatNumber,
+                min = 50, max = 400, step = 1,
+                tooltip = "Set Object Culling fade scale."
+            },
+            [15] = {
+                cvar = "lodObjectMinSize",
+                name = "Object Minimum Size",
+                varType = Settings.VarType.Number,
+                format = FormatNumber,
+                min = 1, max = 200, step = 1,
+                tooltip = "Set Object Culling minimum size."
+            },
+            [16] = {
+                cvar = "lodObjectSizeScale",
+                name = "Object Size Scale",
+                varType = Settings.VarType.Number,
+                format = FormatNumber,
+                min = 1, max = 200, step = 1,
+                tooltip = "Set Object Culling size scale."
             },
         }
         for i, info in ipairs(variablesList) do

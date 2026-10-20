@@ -12,6 +12,7 @@ local function EventHandler(self, event, arg1, arg2, arg3, ...)
     elseif event == "ADDON_LOADED" then
         if arg1 == "Blizzard_GroupFinder_VanillaStyle" then
             addon.LFGSettings()
+            addon.SetBagsVisibility(addon.database.HideBagBar)
         end
     end
 end
