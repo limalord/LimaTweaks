@@ -1,4 +1,13 @@
 {
   "ignore": ["Libs/"],
-  "flavors": ["classic"]
+  "flavors": ["classic"],
+  "hint": {
+    "enable": false,
+    "parameterNames": true,
+    "variableTypes": true,
+    "functionReturnTypes": false,
+    "forVariableTypes": true,
+    "parameterTypes": false,
+    "chainedReturnTypes": false
+  }
 }

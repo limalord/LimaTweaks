@@ -5,9 +5,6 @@ LimaUIC["RaidColors"] = RAID_CLASS_COLORS
 
 
 local function ApplyUITweaks()
-    GameMenuFrame:SetScale(0.85)
-    MicroMenu.BorderArt:Hide()
-    BagsBar.BorderArt:Hide()
     MainStatusTrackingBarContainer:SetScale(0.945)
     SecondaryStatusTrackingBarContainer:SetScale(0.945)
     CharacterFrameModeTabs:SetScale(0.9)
@@ -72,8 +69,9 @@ local function EventHandler(self, event, arg1, arg2, arg3, ...)
     	local hiddenFrame = CreateFrame("Frame")
     	hiddenFrame:Hide()
 
+        addon.InitializeSettings(LimaUIDB)
     	-- apply settings
-	ApplyUITweaks()
+	    ApplyUITweaks()
         -- AddClassColors()
         -- ApplyFrameCornerHide(hiddenFrame)
     end
