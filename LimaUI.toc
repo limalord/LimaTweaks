@@ -1,0 +1,8 @@
+## Interface: 16000
+## Title: |cFF69CCF0LimaUI|r
+## Version: 1
+## Notes: Interface Tweaks
+## Author: Limalord
+## IconTexture: Interface\ICONS\Ability_Rogue_KidneyShot
+## SavedVariables: LimaUIDB
+LimaUI.lua
