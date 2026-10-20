@@ -805,13 +805,23 @@ local function InitializeSettings()
     Settings.RegisterAddOnCategory(keyBindingsCategory)
 
     do
-        local action = "LIMA_UI_OPEN"
+        local action = "LIMAUI_OPEN"
         _G["BINDING_NAME_"..action] = "Open Lima UI"
         local bindingIndex = C_KeyBindings.GetBindingIndex(action)
         local initializer = CreateKeybindingEntryInitializer(bindingIndex, true)
         keyBindingsLayout:AddInitializer(initializer)
 
-        local action = "LIMA_UI_RELOAD"
+        if not GetMacroInfo("LIMAUI_OUTFITS") then
+            CreateMacro("LIMAUI_OUTFITS", 135056, "/luioutfits", false)
+        end
+
+        local action = "LIMAUI_OPEN_OUTFITS"
+        _G["BINDING_NAME_"..action] = "Open Outfits"
+        local bindingIndex = C_KeyBindings.GetBindingIndex(action)
+        local initializer = CreateKeybindingEntryInitializer(bindingIndex, true)
+        keyBindingsLayout:AddInitializer(initializer)
+
+        local action = "LIMAUI_RELOAD"
         _G["BINDING_NAME_"..action] = "Reload UI"
         local bindingIndex = C_KeyBindings.GetBindingIndex(action)
         local initializer = CreateKeybindingEntryInitializer(bindingIndex, true)
@@ -823,11 +833,11 @@ local function InitializeSettings()
         local initializer = CreateKeybindingEntryInitializer(bindingIndex, true)
         keyBindingsLayout:AddInitializer(initializer)
 
-        if not GetMacroInfo("Z_FOCUS") then
-            CreateMacro("Z_FOCUS", "INV_Misc_QuestionMark", "/focus [@mouseover,exists][]", false)
+        if not GetMacroInfo("LIMAUI_FOCUS") then
+            CreateMacro("LIMAUI_FOCUS", 132284, "/focus [@mouseover,exists][]", false)
         end
 
-        local action = "MACRO Z_FOCUS"
+        local action = "MACRO LIMAUI_FOCUS"
         _G["BINDING_NAME_"..action] = "Focus Mouseover"
         local bindingIndex = C_KeyBindings.GetBindingIndex(action)
         local initializer = CreateKeybindingEntryInitializer(bindingIndex, true)
