@@ -380,6 +380,10 @@ local function InitializeSettings()
         Settings.CreateCheckbox(unitFramesCategory, setting, tooltip)
         SetValue(GetValue())
     end
+    -- Key Bindings category
+    local keyBindingsCategory, _ = Settings.RegisterVerticalLayoutSubcategory(mainCategory, "Key Bindings")
+    Settings.RegisterAddOnCategory(keyBindingsCategory)
+
 end
 
 addon.InitializeSettings = InitializeSettings
